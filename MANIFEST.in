@@ -1,0 +1,2 @@
+recursive-include pastie/public *
+recursive-include pastie/templates *
