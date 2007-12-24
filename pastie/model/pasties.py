@@ -8,7 +8,7 @@ from sqlalchemy.orm import backref, mapper, relation
 from pastie.model.metadata import metadata, Session
 from pastie.model.common import tag_table, Tag
 
-mapper = Session.mapper
+#mapper = Session.mapper
 
 paste_table = Table('pastes', metadata,
     Column('id', types.Integer, primary_key=True),

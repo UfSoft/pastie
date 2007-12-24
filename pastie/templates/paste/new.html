@@ -1,0 +1,58 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+  <xi:include href="../layout.html" />
+  <head>
+    <title>New Paste</title>
+  </head>
+  <body>
+    <form id="new_paste" name="new_paste" method='post'
+          action="${h.url_for(controller='pasties', action='new')}">
+      <dl>
+        <dt>Title</dt>
+        <dd>
+          <input type="text" id="id_title" class="vTextField" name="title"
+                 size="30" value="" maxlength="200" />
+          <span class="error-message" py:if="'title' in c.errors">
+            $c.errors.title
+          </span>
+        </dd>
+
+        <dt>Author</dt>
+        <dd>
+          <input type="text" id="id_author" class="vTextField" name="author"
+                 size="30" value="" maxlength="100" />
+          <span class="error-message" py:if="'author' in c.errors">
+            $c.errors.author
+          </span>
+        </dd>
+
+        <dt>Language</dt>
+        <dd>
+          <select id="id_language" class="vSelectField" name="language" size="1">
+            <py:for each="name, alias in h.get_lexers()"><option
+            value="$alias">$name</option>
+            </py:for>
+          </select>
+        </dd>
+        <dt>Tags</dt>
+          <dd id="tagautocomplete">
+            <input id="tags" name="tags" type="text"/>
+            <div id="autocomplete"/>
+          </dd>
+      </dl>
+      ${h.js_obfuscate(h.tag.input(type='hidden', name='notabot', value='most_likely'))}
+
+      <textarea id="id_code" class="vLargeTextField required" name="code"
+                rows="10" cols="80"></textarea>
+
+      <div class="action">
+          <input type="submit" value="Submit" />
+          <input type="reset" value="Reset" />
+      </div>
+    </form>
+  </body>
+</html>

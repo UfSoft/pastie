@@ -1,0 +1,27 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+  <xi:include href="../layout.html" />
+  <head>
+    <title>${c.id}</title>
+  </head>
+  <body>
+    <h2>Pastes tagged with ${str(c.id)}<span style="color: grey; font-size: 14px;">
+      (Displaying ${c.paginator.current.first_item + 1} through
+      ${c.paginator.current.last_item} of ${c.paginator.item_count})</span>
+    </h2>
+
+    ${page_nav()}
+
+    <ul>
+      <li py:for="paste in c.pastes">
+        ${paste_item(paste)}
+      </li>
+    </ul>
+
+    ${page_nav()}
+  </body>
+</html>
