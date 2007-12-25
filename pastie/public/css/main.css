@@ -4,26 +4,19 @@
 
 #header {
     width: 100%;
-    height: 61px;
+    height: 35px;
     background: url(../img/header_bg.png) repeat-x bottom left;
 }
 
-#header span { color: #fff; font-size: 2em; padding: 10px; }
+#header span {
+   color: #fff; font-size: 1.5em; padding: 10px; padding-top: 15px;
+   vertical-align: middle; }
 #fakebody {
   position: relative; min-height: 100%; width: 100%;
   margin: 0 auto; background-color: #fff; */
 }
 
 * html #fakebody { height: 100%; }
-
-#lang_div {
-    float: right;
-    position: relative;
-    right: 2px;
-    top: 2px;
-    font-size: 0.7em;
-}
-#lang_div label { font-weight: bold; color: #fff;}
 
 /* Menu */
 #menu {
@@ -46,7 +39,7 @@
 .copyright {
     float: left;
     position: absolute;
-    top: 61px;
+    top: 35px;
     left: 0px;
     margin: 0px;
     height: 23px;
@@ -64,8 +57,10 @@
 #copy1 { font-size: 0.8em; }
 
 #content {
-  padding: 5px 10px; margin: 0 auto; margin-top: 30px; margin-bottom: 30px; width: 95%;
+  padding: 0px 25px; margin: 0 auto; margin-top: 5px; margin-bottom: 30px; width: 95%;
 }
+#content h2 { margin-left: 30px; margin-top: 0px; text-align: center; margin-right: 150px; }
+div.tags, div.language { margin-left: 30px; margin-right: 150px; text-align: center; }
 
 /* Error Message shown on forms with invalid fields */
 .error-message {
@@ -114,13 +109,6 @@
     margin-left: 3px;
 }
 
-table td.code {
-    width: 100%;
-}
-
-
-/* @override http://localhost:5000/style/paste.css */
-
 input, select {
     border: 1px solid #aaa;
     font-family: 'Verdana', 'Bitstream Vera Sans', sans-serif;
@@ -143,106 +131,19 @@ textarea:focus {
     border: 1px solid #BA832B;
 }
 
-div.syntax,
-div.plain {
-    padding: 10px;
-    border: 1px solid #aaa;
-    overflow: auto;
-}
-div.syntax pre,
-div.plain pre {
+.syntax {margin: 0px;}
+
+#paste {
     margin: 0;
     padding: 0;
-    font-family: 'Bitstream Vera Sans Mono', 'Courier New', monospace;
-    font-weight: bold;
-    font-size: 11px;
-    line-height: 14px;
-}
-div.syntax td.linenos,
-div.plain td.linenos {
-    padding: 0 20px 0 0;
-    opacity: 0.5;
+    border: 1px solid #333;
 }
 
-.sidebar {
-    margin-top:  20px;
-    border-left: 1px solid gray;
-}
-
-#recent-pastes {
+#paste table, #paste tbody {
     margin: 0;
-    padding: 0 0 4px 6px;
-}
-
-#recent-pastes .paste_title {
-    font-size: 122%;
-    font-weight: bold;
-    font-variant: small-caps;
-}
-
-#recent-pastes ul.paste_entry {
-    font-size: 92%;
-    margin-left: 14px;
-}
-
-#tagautocomplete {
-    position:relative;
-    margin-bottom: 5px;
-    height: 1.4em;
-}
-#autocomplete {position:relative;width:100px;margin-bottom:1em;}/* set width of widget here*/
-#autocomplete {z-index:9000} /* for IE z-index of absolute divs inside relative divs issue */
-#tags {_position:absolute;width:450px;height:1.4em;z-index:0;} /* abs for ie quirks */
-#autocomplete {position:absolute;top:1.7em;width:140px;}
-#autocomplete .yui-ac-content {position:absolute;width:100%;border:1px solid #404040;background:#fff;overflow:hidden;z-index:9050;}
-#autocomplete .yui-ac-shadow {position:absolute;margin:.3em;width:100%;background:#a0a0a0;z-index:9049;}
-#autocomplete ul {padding:5px 0;width:100%; list-style: none; margin: 0;}
-#autocomplete li {padding:0 5px;cursor:default;white-space:nowrap;}
-#autocomplete li.yui-ac-highlight {background: #eafec2;}
-#autocomplete li.yui-ac-prehighlight {background:#FFFFCC;}
-
-/* Navigation */
-.nav h2, .nav hr { display: none }
-.nav ul { font-size: 10px; list-style: none; margin: 0; text-align: right }
-.nav li {
- border-right: 1px solid #d7d7d7;
- display: inline;
- padding: 0 .75em;
- white-space: nowrap;
-}
-.nav li.last { border-right: none }
-
-/* Context-dependent navigation links */
-#ctxtnav {
-    height: 1em;
-    margin-top: 0px;
-    margin-bottom: 10px;
-    clear: both;
-}
-#ctxtnav li ul {
- background: #f7f7f7;
- color: #ccc;
- border: 1px solid;
- padding: 0;
- display: inline;
- margin: 0;
-}
-#ctxtnav li li { padding: 0; }
-#ctxtnav li li :link, #ctxtnav li li :visited { padding: 0 1em }
-#ctxtnav li li :link:hover, #ctxtnav li li :visited:hover {
- background: #bba;
- color: #fff;
-}
-
-h2 {
-    margin-top: 0px;
-}
-#bd {
-    padding-top: 10px;
-}
-.pasteitem {
-    color: grey;
-    font-size: 10px;
+    padding: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
 #paste td.linenos {
@@ -253,6 +154,7 @@ h2 {
     color: #eee;
 }
 
+#paste td.linenos .special { font-weight: bold; }
 #paste .code, #paste.code {
     padding-left: 10px;
 }

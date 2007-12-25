@@ -30,7 +30,8 @@ class PastiesController(BaseController):
         code = request.POST['code']
         tags = request.POST['tags']
         paste = Paste(author, title, language, code, tags)
-        Session.save(paste)
+        #Session.save_or_update(paste)
+        #Session.save(paste)
         Session.commit()
         redirect_to('paste', id=paste.id)
 

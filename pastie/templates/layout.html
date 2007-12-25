@@ -31,43 +31,6 @@
 
   </head>
 
-
-  <!--! Define some usefull functions -->
-  <py:def function="paste_item(paste)">
-    <span class="pasteitem">(<a href="#" id="source_${paste.id}"
-                                class="viewtoggle">View</a>)</span>
-    ${h.link_to(paste.title or 'Untitled',
-      h.url_for('paste', id=paste.id))} by ${paste.author} posted on
-    ${paste.date.strftime('%b %d, %Y at %I:%M%p')}<br />
-    <div class="code_${paste.id}" style="display: none;">
-    <div class="tags" py:if="paste.tags">Tags: <span style="taglist">
-    <py:for each="tag in paste.tags">
-      ${ h.tag.a(tag.name, href=h.url_for('pastetag', id=tag.name)) }&nbsp;
-    </py:for></span>
-    </div>
-    ${h.code_highlight(paste)}
-    </div>
-  </py:def>
-
-  <py:def function="page_nav">
-    <a py:if="not c.paginator.current.first"
-       href="${h.url_for(page=(c.paginator.current_page-1))}">&lt;- Prev</a>
-    <span py:if="c.paginator.current.first"
-          style="color: #bbb;">&lt;- Prev</span>
-    <a py:if="not c.paginator.current.last"
-       href="${h.url_for(page=(c.paginator.current_page+1))}">Next -&gt;</a>
-    <span py:if="c.paginator.current.last"
-          style="color: #bbb;">Next -&gt;</span>
-  </py:def>
-
-  <py:def function="tagcloud(tag_info)">
-    <span style="font-size: ${tag[2] * 1.3}px;" py:for="tag in tag_info"><a
-      href="${h.url_for('pastetag', id=tag[0])}">${tag[0]}</a>
-    </span>
-  </py:def>
-
-  <!--! Define some usefull functions ENDED -->
-
   <body py:match="body">
     <noscript>
       <div id="warning">
@@ -82,30 +45,10 @@
       </div>
     </noscript>
     <div id="fakebody" style="display: none;">
-        <div id="lang_div">
-          <form id="lang_choose" method="post"
-                action="${ h.url_for(controller='lang', action='index', id=None)}">
-            <label for="language">Language:</label>
-            <select name="locale" id="locale"
-                    onChange="$('#lang_choose').submit()">
-            <py:for each="locale, lang, selected in c.languages" py:choose="">
-              <option py:when="selected is True" value="${ locale }"
-                      selected="selected">${ lang }</option>
-              <option py:otherwise="" value="${ locale }">${ lang }</option>
-            </py:for>
-            <input type="hidden" id="current_url" name="current_url"
-                   value="${ h.url_for(qualified=True) }"/>
-            <noscript>
-              <input type="submit" name="submit" value="Update"/>
-            </noscript>
-            </select>
-          </form>
-        </div> <!--! lang_div ended -->
       <span id="message" class="sys-message" py:if="c.message">
         ${ c.message }
       </span>
-      <div id="header">
-        <br/><span>Pasties Pastebin</span>
+      <div id="header"><span>Pasties Pastebin</span>
       </div> <!--! header div ended -->
         <div id="menu">
           <ul>
@@ -131,7 +74,9 @@
       </span>
     </div>
     <script type="text/javascript">
-      $(document).ready(function() { /*pngFix();*/ $('#copy2').hide(); });
+      $(document).ready(function() {
+        $('#copy2').hide();
+      });
       $('#copy1').click(function() {
         $(this).SlideOutLeft(600);
         $('#copy2').SlideInLeft(300);
@@ -149,6 +94,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 3 2007-12-24 19:03:39Z s0undt3ch $
+$Id: layout.html 4 2007-12-25 12:29:08Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->

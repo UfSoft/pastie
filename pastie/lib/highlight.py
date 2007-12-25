@@ -1,7 +1,7 @@
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name, get_all_lexers
 from pygments.formatters import HtmlFormatter
-from genshi.core import Markup
+from genshi import XML
 import operator
 
 __all__ = ['code_highlight', 'get_lexers']
@@ -10,7 +10,8 @@ langdict = {}
 for lang in get_all_lexers():
     langdict[lang[1][0]] = lang[0]
 
-formatter = HtmlFormatter(linenos=True, cssclass="syntax", encoding='utf-8')
+formatter = HtmlFormatter(linenos=True, cssclass="syntax", encoding='utf-8',
+                          lineanchors='line', linenospecial=10)
 
 def code_highlight(code, truncate_lines=None):
     source = code.code
@@ -21,7 +22,7 @@ def code_highlight(code, truncate_lines=None):
             source.append('...')
             source = ''.join(source)
     lexer = get_lexer_by_name(code.language, stripall=True)
-    return Markup(highlight(source, lexer, formatter).decode('utf-8'))
+    return XML(highlight(source, lexer, formatter).decode('utf-8'))
 
 def get_lexers():
     lexers = []
