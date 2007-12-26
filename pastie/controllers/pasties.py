@@ -9,19 +9,18 @@ log = logging.getLogger(__name__)
 
 class PastiesController(BaseController):
 
-    def __call__(self, environ, start_response):
+    def __before__(self):
         c.model = model
         c.langdict = langdict
-        return BaseController.__call__(self, environ, start_response)
 
     @rest.dispatch_on(POST="new_POST")
     def new(self):
         log.debug('On new')
         c.tags = Session.query(Tag)
+        c.public_key = config['spamfilter.recaptcha.public_key']
         return render('paste.new')
 
-    @validate(template='paste.new', schema=model.forms.NewPaste(), form='new',
-              variable_decode=True)
+    @validate(template='paste.new', schema=model.forms.NewPaste(), form='new')
     def new_POST(self):
         log.debug('On create')
         author = request.POST['author']

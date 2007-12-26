@@ -6,9 +6,8 @@ log = logging.getLogger(__name__)
 
 class PastetagsController(BaseController):
 
-    def __call__(self, environ, start_response):
+    def __before__(self):
         c.model = model
-        return BaseController.__call__(self, environ, start_response)
 
     @beaker_cache(expire=120)
     def index(self):

@@ -44,15 +44,40 @@
             <div id="autocomplete"/>
           </dd>
       </dl>
+
       ${h.js_obfuscate(h.tag.input(type='hidden', name='notabot', value='most_likely'))}
 
       <textarea id="id_code" class="vLargeTextField required" name="code"
                 rows="10" cols="80"></textarea>
 
+      <span class="error-message" py:if="'code' in c.errors">
+        $c.errors.code
+      </span>
+
+      <div id="captcha_holder"
+           py:if="'recaptcha_challenge_field' in c.errors or 'code' in c.errors">&nbsp;</div>
+
+      <span class="error-message" py:if="'recaptcha_challenge_field' in c.errors">
+        $c.errors.recaptcha_challenge_field
+      </span>
+
       <div class="action">
-          <input type="submit" value="Submit" />
-          <input type="reset" value="Reset" />
+        <input type="submit" value="Submit" />
+        <input type="reset" value="Reset" />
       </div>
     </form>
+    <script type="text/javascript" py:if="'recaptcha_challenge_field' in c.errors or 'code' in c.errors">
+      $(document).ready(function() {
+        $.getScript("http://api.recaptcha.net/js/recaptcha_ajax.js", function() {
+          Recaptcha.create("$c.public_key",
+          "captcha_holder", {
+            theme: 'white',
+            lang: 'en',
+            error: "$c.check_error"
+
+          });
+        });
+      });
+    </script>
   </body>
 </html>
