@@ -15,7 +15,7 @@ class PastetagsController(BaseController):
     @beaker_cache(expire=45, type="memory", query_args=True)
     def show(self, id):
         query_args = [Paste.tags.any(name=str(id))]
-        c.paginator, c.pastes = paginate(Paste.query(), per_page=15,
+        c.paginator, c.pastes = paginate(Paste.query(), per_page=20,
                                          query_args=query_args,
                                          _session=Session)
         return render('pastetags.show')

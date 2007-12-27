@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: sw=4 ts=4 fenc=utf-8
 # =============================================================================
-# $Id: validators.py 10 2007-12-27 18:30:23Z s0undt3ch $
+# $Id: validators.py 12 2007-12-27 19:20:29Z s0undt3ch $
 # =============================================================================
 #             $URL: http://pastie.ufsoft.org/svn/trunk/pastie/model/forms/validators.py $
-# $LastChangedDate: 2007-12-27 18:30:23 +0000 (Thu, 27 Dec 2007) $
-#             $Rev: 10 $
+# $LastChangedDate: 2007-12-27 19:20:29 +0000 (Thu, 27 Dec 2007) $
+#             $Rev: 12 $
 #   $LastChangedBy: s0undt3ch $
 # =============================================================================
 # Copyright (C) 2007 UfSoft.org - Pedro Algarvio <ufs@ufsoft.org>
@@ -45,20 +45,13 @@ class AkismetValidator(validators.UnicodeString):
 
     def validate_python(self, value, state):
         if ('recaptcha_challenge_field' or 'recaptcha_response_field') in request.POST:
-            log.debug("Skiping akismet")
+            log.debug("Skiping akismet, reCaptcha present")
             return
-        print 'request', request, request.__dict__
-        print
-        print 'environ', request.environ
-        print
-        print 'config', config
+
         validators.UnicodeString.validate_python(self, value, state)
 
-
-        base_url = "%s://%s%s%s" % (request.scheme,
-                                  request.host,
-                                  request.script_name,
-                                  request.path_info)
+        base_url = "%s://%s%s%s" % (request.scheme, request.host,
+                                    request.script_name, request.path_info)
 
         self._validade_akismet_key(base_url)
 
@@ -130,7 +123,7 @@ class IPBlacklistValidator(validators.UnicodeString):
 
     def validate_python(self, value, state):
         if ('recaptcha_challenge_field' or 'recaptcha_response_field') in request.POST:
-            log.debug("Skiping ip blacklist")
+            log.debug("Skiping ip blacklist, reCaptcha present")
             return
         if not HAVE_DNSPYTHON:
             log.warning("Skiping blacklist check, no dnspython package")
@@ -151,6 +144,7 @@ class IPBlacklistValidator(validators.UnicodeString):
             except (Timeout, NoAnswer, NoNameservers), e:
                 log.warning('Error checking IP blacklist server "%s" for '
                             'IP "%s": %s' % (server, remote_addr, e))
+                continue
             else:
                 blacklisting_servers.append(server)
 
@@ -188,7 +182,7 @@ class CaptchaValidator(FancyValidator):
     def validate_python(self, value, state):
         if ('recaptcha_challenge_field' or 'recaptcha_response_field') not in \
             request.POST:
-            log.debug('skiping captcha')
+            log.debug('Skiping captcha, no , reCaptcha fields present')
             return
         params = dict(
             privatekey = config['spamfilter.recaptcha.private_key'],

@@ -44,7 +44,7 @@ class PastiesController(BaseController):
             query_args = []
 #        c.paginator, c.pastes = paginate(Session.query(Paste).all(),
         c.paginator, c.pastes = paginate(Paste.query(),
-                                         per_page=5,
+                                         per_page=20,
                                          query_args=query_args,
                                          _session=Session)
         return render('paste.index')
