@@ -19,6 +19,7 @@
     ${ h.stylesheet_link_tag('/css/pygments_default.css') }
 
     ${ h.javascript_include_tag('/js/jquery-latest.js') }
+    ${ h.javascript_include_tag('/js/jquery.easing.js') }
     <!--
     ${ h.javascript_include_tag('/js/jquery.dimensions.pack.js') }
     ${ h.javascript_include_tag('/js/jquery.interface.js') }
@@ -78,16 +79,21 @@
       </span>
     </div>
     <script type="text/javascript">
-      $(document).ready(function() {
-        $('#copy2').hide();
-      });
+      $('#copy2').css('left', -200);
       $('#copy1').click(function() {
-        $(this).SlideOutLeft(600);
-        $('#copy2').SlideInLeft(300);
+        $(this).animate({left: -200, opacity: 0},
+                        {queue: true, duration: 600, easing: 'easeOutSine'}
+        );
+        $('#copy2').animate({left: 0, opacity:100},
+                            {queue: false, duration: 300, easing: 'easeInExpo'}
+        );
       });
       $('#copy2').click(function() {
-        $(this).SlideOutLeft(500);
-        $('#copy1').SlideInLeft(300);
+        $(this).animate({left: -200},
+                        {queue: false, duration: 600, easing: 'easeOutSine'});
+        $('#copy1').animate({left: 0, opacity: 100},
+                            {duration: 300, easing: 'easeInExpo'}
+        );
       });
     </script>
     <script type="text/javascript" py:if="c.message">
@@ -98,6 +104,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 9 2007-12-27 17:19:26Z s0undt3ch $
+$Id: layout.html 13 2007-12-27 21:29:41Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->
