@@ -1,8 +1,8 @@
 Metadata-Version: 1.0
 Name: Pastie
-Version: 0.0.1dev
+Version: 0.0.1dev-r10
 Summary: Pastebin
-Home-page: UNKNOWN
+Home-page: http://pastie.ufsoft.org
 Author: Pedro Algarvio
 Author-email: ufs@ufsoft.org
 License: UNKNOWN

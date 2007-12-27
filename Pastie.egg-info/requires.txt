@@ -1,1 +1,2 @@
 Pylons>=0.9.6rc3dev-r2352
+pygments
