@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: sw=4 ts=4 fenc=utf-8
 # =============================================================================
-# $Id: validators.py 8 2007-12-26 23:03:50Z s0undt3ch $
+# $Id: validators.py 10 2007-12-27 18:30:23Z s0undt3ch $
 # =============================================================================
 #             $URL: http://pastie.ufsoft.org/svn/trunk/pastie/model/forms/validators.py $
-# $LastChangedDate: 2007-12-26 23:03:50 +0000 (Wed, 26 Dec 2007) $
-#             $Rev: 8 $
+# $LastChangedDate: 2007-12-27 18:30:23 +0000 (Thu, 27 Dec 2007) $
+#             $Rev: 10 $
 #   $LastChangedBy: s0undt3ch $
 # =============================================================================
 # Copyright (C) 2007 UfSoft.org - Pedro Algarvio <ufs@ufsoft.org>
@@ -121,12 +121,19 @@ class AkismetValidator(validators.UnicodeString):
 class IPBlacklistValidator(validators.UnicodeString):
     servers = ['bsb.empty.us', 'sc.surbl.org']
 
+    def _to_python(self, value, state):
+        log.debug('Running DNS blacklist checks')
+        try:
+            return value.strip()
+        except:
+            return value
+
     def validate_python(self, value, state):
         if ('recaptcha_challenge_field' or 'recaptcha_response_field') in request.POST:
             log.debug("Skiping ip blacklist")
             return
         if not HAVE_DNSPYTHON:
-            log.debug("Skiping blacklist check, no dnspython package")
+            log.warning("Skiping blacklist check, no dnspython package")
             return
 
         remote_addr = request.environ['REMOTE_ADDR']
@@ -134,11 +141,12 @@ class IPBlacklistValidator(validators.UnicodeString):
         self.servers = config['spamfilter.blacklist.servers'].split() or \
                        self.servers
 
-        prefix = '.'.join(reversed(remote_addr.split('.')))
+        prefix = '.'.join(reversed(remote_addr.split('.'))) + '.'
         for server in self.servers:
             try:
                 query(prefix + server.encode('utf-8'))
             except NXDOMAIN: # not blacklisted on this server
+                log.debug('IP: %s not blacklisted by %s', remote_addr, server)
                 continue
             except (Timeout, NoAnswer, NoNameservers), e:
                 log.warning('Error checking IP blacklist server "%s" for '

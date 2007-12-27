@@ -83,12 +83,13 @@
     </script>
 
     <script type="text/javascript">
+    //<![CDATA[
       $(document).ready(function() {
         function get_tags(v) {
           var tags = ${ repr(c.tags) };
           var a=[];
           console.log(v);
-          for (var i=0;i&lt;tags.length;i++) {
+          for (var i=0; i<tags.length ; i++) {
             if ( tags[i].indexOf(v) != -1 ) {
               a.push({id: i, value: tags[i]});
             }
@@ -102,6 +103,7 @@
           multi: true
         });
       });
+    //]]>
     </script>
   </body>
 </html>
