@@ -6,6 +6,8 @@
       xmlns:xi="http://www.w3.org/2001/XInclude">
   <xi:include href="../layout.html" />
   <head>
+    ${ h.javascript_include_tag('/js/jquery.autocomplete.js') }
+    ${ h.stylesheet_link_tag('/css/jquery.autocomplete.css') }
     <title>New Paste</title>
   </head>
   <body>
@@ -39,9 +41,9 @@
           </select>
         </dd>
         <dt>Tags</dt>
-          <dd id="tagautocomplete">
+          <dd id="tagautocomplete_">
             <input id="tags" name="tags" type="text"/>
-            <div id="autocomplete"/>
+            <span class="info-message">Seperate tags with commas(,)</span>
           </dd>
       </dl>
 
@@ -66,7 +68,8 @@
         <input type="reset" value="Reset" />
       </div>
     </form>
-    <script type="text/javascript" py:if="'recaptcha_challenge_field' in c.errors or 'code' in c.errors">
+    <script type="text/javascript"
+            py:if="'recaptcha_challenge_field' in c.errors or 'code' in c.errors">
       $(document).ready(function() {
         $.getScript("http://api.recaptcha.net/js/recaptcha_ajax.js", function() {
           Recaptcha.create("$c.public_key",
@@ -74,8 +77,29 @@
             theme: 'white',
             lang: 'en',
             error: "$c.check_error"
-
           });
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        function get_tags(v) {
+          var tags = ${ repr(c.tags) };
+          var a=[];
+          console.log(v);
+          for (var i=0;i&lt;tags.length;i++) {
+            if ( tags[i].indexOf(v) != -1 ) {
+              a.push({id: i, value: tags[i]});
+            }
+          }
+          return a;
+        };
+        $('#tags').autocomplete({
+          get: get_tags,
+          cache: true,
+          minchars: 2,
+          multi: true
         });
       });
     </script>

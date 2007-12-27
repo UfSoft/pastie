@@ -88,7 +88,6 @@ div.tags, div.language { margin-left: 30px; margin-right: 150px; text-align: cen
     margin: 15px;
     padding: 0px 15px 0px 25px;
     font-size: 0.7em;
-
 }
 .info-message tt { font-size: 1.5em; font-weight: bold; }
 
@@ -113,7 +112,7 @@ div.tags, div.language { margin-left: 30px; margin-right: 150px; text-align: cen
 input, select {
     border: 1px solid #aaa;
     font-family: 'Verdana', 'Bitstream Vera Sans', sans-serif;
-    font-size: 13px;
+    font-size: 0.8em;
 }
 
 input:focus {
@@ -166,3 +165,4 @@ textarea:focus {
     font-family: 'Bitstream Vera Sans Mono', monospace;
     font-size: 13px;
 }
+

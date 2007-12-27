@@ -28,6 +28,13 @@ app_instance_uuid = ${app_instance_uuid}
 #beaker.cache.data_dir = %(here)s/data/cache
 #beaker.session.data_dir = %(here)s/data/sessions
 
+spamfilter.akismet_key = 
+spamfilter.akismet_url = rest.akismet.com/1.1/
+spamfilter.recaptcha.public_key = 
+spamfilter.recaptcha.private_key = 
+spamfilter.blacklist.servers = bsb.empty.us sc.surbl.org
+
+
 # WARNING: *THE LINE BELOW MUST BE UNCOMMENTED ON A PRODUCTION ENVIRONMENT*
 # Debug mode will enable the interactive debugging tool, allowing ANYONE to
 # execute malicious code after an exception is raised.
@@ -36,17 +43,32 @@ set debug = false
 
 # Logging configuration
 [loggers]
-keys = root
+keys = root, pastie, pylons, pylonsgenshi
 
 [handlers]
-keys = console
+keys = console, file
 
 [formatters]
 keys = generic
 
 [logger_root]
-level = INFO
-handlers = console
+level = ERROR
+handlers = console, file
+
+[logger_pastie]
+level = DEBUG
+handlers =
+qualname = pastie
+
+[logger_pylons]
+level = DEBUG
+handlers =
+qualname = pylons
+
+[logger_pylonsgenshi]
+level = DEBUG
+handlers =
+qualname = pylonsgenshi
 
 [handler_console]
 class = StreamHandler
@@ -54,5 +76,12 @@ args = (sys.stderr,)
 level = NOTSET
 formatter = generic
 
+[handler_file]
+class = handlers.RotatingFileHandler
+args = ('/path/to/app/basedir/Pastie.log', 'a', 10024, 3)
+level = DEBUG
+formatter = generic
+
 [formatter_generic]
-format = %(asctime)s %(levelname)-5.5s [%(name)s] %(message)s
+format = %(asctime)s,%(msecs)03d %(levelname)-5.5s [%(name)s] %(message)s
+datefmt = %H:%M:%S

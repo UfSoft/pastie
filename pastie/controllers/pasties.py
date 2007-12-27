@@ -16,7 +16,7 @@ class PastiesController(BaseController):
     @rest.dispatch_on(POST="new_POST")
     def new(self):
         log.debug('On new')
-        c.tags = Session.query(Tag)
+        c.tags = [str(tag.name) for tag in Session.query(Tag).all()]
         c.public_key = config['spamfilter.recaptcha.public_key']
         return render('paste.new')
 
