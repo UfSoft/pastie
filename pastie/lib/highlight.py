@@ -21,14 +21,15 @@ def code_highlight(code, truncate_lines=None):
             source = split_source[:truncate_lines-1]
             source.append('...')
             source = ''.join(source)
-    lexer = get_lexer_by_name(code.language, stripall=True)
+    lexer = get_lexer_by_name(code.language or 'text', stripall=True)
     return XML(highlight(source, lexer, formatter).decode('utf-8'))
 
-def get_lexers():
-    lexers = []
+def get_lexers(sorted_list=False):
+    lexers = {}
     for name, aliases, _, _ in get_all_lexers():
         if isinstance(aliases, (list, tuple)):
             aliases = aliases[0]
-        lexers.append((name, aliases))
-    lexers.sort(key=operator.itemgetter(0))
+        lexers[aliases] = name
+    #lexers.sort(key=operator.itemgetter(0))
     return lexers
+

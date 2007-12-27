@@ -16,7 +16,7 @@
       <em>${c.paste.author or "anonymous"}</em></span>
     </h2>
     <div class="language">
-      <b>Language:</b> <span style="lang">${c.langdict[c.paste.language]}</span>
+      <b>Language:</b> <span style="lang">${c.langdict[c.paste.language or 'text']}</span>
     </div>
     <div class="tags" py:if="c.paste.tags"><b>Tags: </b><span style="taglist">
       <py:for each="tag in c.paste.tags">

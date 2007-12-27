@@ -34,9 +34,10 @@
 
         <dt>Language</dt>
         <dd>
-          <select id="id_language" class="vSelectField" name="language" size="1">
-            <py:for each="name, alias in h.get_lexers()"><option
-            value="$alias">$name</option>
+          <select id="id_language" class="vSelectField" name="language" size="1"
+                  py:with="lexers = h.get_lexers()">
+            <py:for each="lexer in sorted(lexers.keys())"><option
+            value="$lexer">${lexers[lexer]}</option>
             </py:for>
           </select>
         </dd>
