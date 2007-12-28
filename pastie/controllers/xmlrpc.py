@@ -21,6 +21,7 @@ class XmlrpcController(XMLRPCController):
 
     def pastie_newPaste(self, author, title, language, code, tags=None,
                         parent_id=None, filename='', mimetype=''):
+        log.debug('On XMLRPC controller')
 
         if isinstance(tags, (tuple, list)):
             tags = ' '.join(tags)
@@ -28,20 +29,23 @@ class XmlrpcController(XMLRPCController):
         def get_language_for(filename, mimetype):
             try:
                 lexer = get_lexer_for_mimetype(mimetype)
+                log.debug('could not get lexer from mimetype')
             except ClassNotFound:
                 try:
                     lexer = get_lexer_for_filename(filename)
                 except:
+                    log.debug('could not get lexer from filename')
                     try:
                         lexer = guess_lexer(code)
                     except:
+                        log.debug('could not guess lexer')
                         return 'text'
             log.debug(lexer)
             for alias in lexer.aliases:
                 if alias in h.get_lexers():
                     return alias
             return 'text'
-            language = get_language_for(filename or '', mimetype or '')
+        language = get_language_for(filename or '', mimetype or '')
 
         paste = Paste(author, title, language, code, tags)
         Session.commit()
