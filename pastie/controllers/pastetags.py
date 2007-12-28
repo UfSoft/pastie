@@ -9,6 +9,7 @@ class PastetagsController(BaseController):
     @beaker_cache(expire=120)
     def index(self):
         c.tag_sizes = Paste.tag_sizes()
+        log.debug(c.tag_sizes)
         return render('pastetags.tagcloud')
 
 #    @beaker_cache(expire=45, type="ext:memcached", query_args=True)

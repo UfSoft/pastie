@@ -10,8 +10,9 @@
     <title>Pastes</title>
   </head>
   <body>
-
-    <h2>Pastes &nbsp;<span style="color: grey; font-size: 14px;">(Displaying
+    <py:if test="c.paginator.item_count>0">
+    <h2>Pastes &nbsp;
+      <span style="color: grey; font-size: 14px;">(Displaying
       ${c.paginator.current.first_item + 1} through
       ${c.paginator.current.last_item} of ${c.paginator.item_count})</span>
     </h2>
@@ -32,5 +33,7 @@
         );
       });
     </script>
+    </py:if>
+    <h2 py:if="c.paginator.item_count&lt;1"> No pastes available</h2>
   </body>
 </html>

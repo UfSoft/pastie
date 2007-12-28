@@ -10,10 +10,13 @@
     <title>Tags</title>
   </head>
   <body>
+    <py:if test="len(c.tag_sizes)>0">
     <h2>Tags</h2>
 
     <div class="tagcloud">
       ${tagcloud(c.tag_sizes)}
     </div>
+    </py:if>
+    <h2 py:if="len(c.tag_sizes)&lt;1">No Tags Available</h2>
   </body>
 </html>
