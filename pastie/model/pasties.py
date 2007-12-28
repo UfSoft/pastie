@@ -37,6 +37,7 @@ class Paste(object):
         self.language = language
         self.code = code
         self.date = datetime.now()
+        self.parent_id = parent_id
         if tags:
             taglist = tags.replace(',',' ').strip().split(' ')
             for newtag in taglist:

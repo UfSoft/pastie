@@ -31,7 +31,8 @@ class PastiesController(BaseController):
         language = request.POST['language']
         code = request.POST['code']
         tags = request.POST['tags']
-        paste = Paste(author, title, language, code, tags)
+        parent_id = request.POST['parent_id']
+        paste = Paste(author, title, language, code, tags, parent_id=parent_id)
         #Session.save_or_update(paste)
         #Session.save(paste)
         Session.commit()
@@ -50,6 +51,7 @@ class PastiesController(BaseController):
                                          per_page=20,
                                          query_args=query_args,
                                          _session=Session)
+        log.debug(c.pastes)
         return render('paste.index')
 
     def show(self, id):

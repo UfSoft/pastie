@@ -20,3 +20,4 @@ class NewPaste(myschema):
                IPBlacklistValidator(not_empty=True))
     recaptcha_challenge_field = CaptchaValidator(if_missing=None, not_empty=True)
     tags = String()
+    parent_id = Int(not_empty=False, if_missing=None)
