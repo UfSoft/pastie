@@ -37,6 +37,14 @@
   </py:def>
 
 
+  <py:def function="buildtree(paste)">
+    <ul>
+      <li py:for="child in paste.children">
+        ${paste_item(child)}
+        <py:if test="child.children is not []">${buildtree(child)}</py:if>
+      </li>
+    </ul>
+  </py:def>
   <!--! Define some usefull functions ENDED -->
 
 </html>

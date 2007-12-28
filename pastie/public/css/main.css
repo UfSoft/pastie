@@ -166,3 +166,18 @@ textarea:focus {
     font-size: 13px;
 }
 
+#paste_menu {
+  margin: 0;
+  padding-left: 15px;
+  float: right;
+  background: url(../img/cell_bg.png) no-repeat left bottom;
+  font-weight: bold;
+}
+
+#paste_menu ul {
+  margin: 0;
+  padding: 5px 5px 5px 20px; list-style: none;
+}
+#paste_menu li { display: inline; padding: 5px;}
+#paste_menu li a { color: #ccc; text-decoration: none; }
+#paste_menu li a:hover { color: #fff; }

@@ -74,8 +74,8 @@
         $c.errors.recaptcha_challenge_field
       </span>
 
-      <input py:if="c.parent" type="hidden" name="parent_id" id="parent_id"
-             value="$c.parent.id"/>
+      <input type="hidden" name="parent_id" id="parent_id"
+             value="${ c.parent and c.parent.id or ''}"/>
 
       <div class="action">
         <input type="submit" value="Submit" />

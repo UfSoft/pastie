@@ -36,10 +36,11 @@ class PastiesController(BaseController):
         #Session.save_or_update(paste)
         #Session.save(paste)
         Session.commit()
+        cache.get_cache('pasties.index').clear()
         redirect_to('paste', id=paste.id)
 
 #    @beaker_cache(expire=45, type="ext:memcached", query_args=True)
-    @beaker_cache(expire=45, type="memory", query_args=True)
+    @beaker_cache(key=None, expire=45, type="memory") #, query_args=True)
     def index(self):
         show_today = request.GET.get('restrict', '') == 'today'
         if show_today:
@@ -65,3 +66,12 @@ class PastiesController(BaseController):
         c.paste = paste
         c.styles = formatter.get_style_defs('.syntax')
         return render('paste.show')
+
+    def tree(self, id):
+        paste = Session.query(Paste).get(int(id))
+        print paste
+        paste = Paste.resolve_root(int(id))
+        print paste
+        c.id = int(id)
+        c.paste = paste
+        return render('paste.tree')

@@ -1,0 +1,30 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+  <xi:include href="../layout.html" />
+  <xi:include href="../helpers.html" />
+  <head>
+    <title>${c.paste.id}</title>
+  </head>
+  <body>
+    <h2 style="font-size: 18px; font-weight:bold;">
+      <span style="font-size:0.8em; font-weight: normal;"><em>
+        Tree of</em></span> $c.paste.title
+      <span style="font-size:0.8em; font-weight: normal;">by
+      <em>${c.paste.author or "anonymous"}</em>
+      </span>
+    </h2>
+    ${paste_item(c.paste)}
+    ${buildtree(c.paste)}
+    <script type="text/javascript">
+      $('a.viewtoggle').bind('click', function() {
+        $('div.code_' +  $(this).attr('id').replace('source_', '')).slideToggle(
+         5, $(this).html() == 'View' ? $(this).html('Hide') : $(this).html('View')
+        );
+      });
+    </script>
+  </body>
+</html>

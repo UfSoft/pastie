@@ -18,6 +18,7 @@ def make_map():
 
     # CUSTOM ROUTES HERE
     map.connect('newpaste', '', controller='pasties', action='new')
+    map.connect('pastetree', '', controller='pasties', action='tree')
     map.resource('pastetag', 'pastetags')
     map.resource('paste', 'pasties')
 
