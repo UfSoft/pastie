@@ -181,3 +181,6 @@ textarea:focus {
 #paste_menu li { display: inline; padding: 5px;}
 #paste_menu li a { color: #ccc; text-decoration: none; }
 #paste_menu li a:hover { color: #fff; }
+
+.viewtoggle {font-size: 0.7em;}
+span.current_id { background-color: lightyellow; font-style: italic; }

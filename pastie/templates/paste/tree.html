@@ -7,7 +7,7 @@
   <xi:include href="../layout.html" />
   <xi:include href="../helpers.html" />
   <head>
-    <title>${c.paste.id}</title>
+    <title>Tree of "${c.paste.title}"</title>
   </head>
   <body>
     <h2 style="font-size: 18px; font-weight:bold;">
@@ -18,7 +18,7 @@
       </span>
     </h2>
     ${paste_item(c.paste)}
-    ${buildtree(c.paste)}
+    ${buildtree(c.paste, c.id)}
     <script type="text/javascript">
       $('a.viewtoggle').bind('click', function() {
         $('div.code_' +  $(this).attr('id').replace('source_', '')).slideToggle(

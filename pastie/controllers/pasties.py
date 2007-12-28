@@ -68,10 +68,10 @@ class PastiesController(BaseController):
         return render('paste.show')
 
     def tree(self, id):
-        paste = Session.query(Paste).get(int(id))
-        print paste
         paste = Paste.resolve_root(int(id))
-        print paste
-        c.id = int(id)
+        if not paste:
+            abor(404)
         c.paste = paste
+        c.id = int(id)
+        print c.paste, c.id
         return render('paste.tree')
