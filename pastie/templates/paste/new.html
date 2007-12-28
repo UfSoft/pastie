@@ -17,7 +17,8 @@
         <dt>Title</dt>
         <dd>
           <input type="text" id="id_title" class="vTextField" name="title"
-                 size="30" value="" maxlength="200" />
+                 size="30" value="${c.parent and 'Re: %s' % c.parent.title or ''}"
+                 maxlength="200" />
           <span class="error-message" py:if="'title' in c.errors">
             $c.errors.title
           </span>
@@ -36,21 +37,30 @@
         <dd>
           <select id="id_language" class="vSelectField" name="language" size="1"
                   py:with="lexers = h.get_lexers()">
-            <py:for each="lexer in sorted(lexers.keys())"><option
-            value="$lexer">${lexers[lexer]}</option>
+            <py:for each="lexer in sorted(lexers.keys())">
+            <option value="$lexer" py:if="c.parent"
+                    selected="${c.parent.language==lexer and 'selected' or ''}">
+            ${lexers[lexer]}</option>
+            <option py:if="not c.parent"
+                    value="$lexer">${lexers[lexer]}</option>
             </py:for>
           </select>
         </dd>
         <dt>Tags</dt>
           <dd id="tagautocomplete_">
-            <input id="tags" name="tags" type="text"/>
+            <input id="tags" name="tags" type="text"
+                   value="${c.parent and ', '.join(tag.name for tag in c.parent.tags) or ''}"/>
             <span class="info-message">Seperate tags with commas(,)</span>
           </dd>
       </dl>
 
       ${h.js_obfuscate(h.tag.input(type='hidden', name='notabot', value='most_likely'))}
 
-      <textarea id="id_code" class="vLargeTextField required" name="code"
+      <textarea id="id_code" py:if="c.parent"
+                class="vLargeTextField required" name="code"
+                rows="10" cols="80">${c.parent.code and c.parent.code or ''}</textarea>
+      <textarea id="id_code" py:if="not c.parent"
+                class="vLargeTextField required" name="code"
                 rows="10" cols="80"></textarea>
 
       <span class="error-message" py:if="'code' in c.errors">

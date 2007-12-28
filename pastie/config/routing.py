@@ -17,7 +17,7 @@ def make_map():
     map.connect('error/:action/:id', controller='error')
 
     # CUSTOM ROUTES HERE
-    map.connect('newpaste', '', controller='pasties', action='new', id=None)
+    map.connect('newpaste', '', controller='pasties', action='new')
     map.resource('pastetag', 'pastetags')
     map.resource('paste', 'pasties')
 

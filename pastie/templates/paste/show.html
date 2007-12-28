@@ -13,7 +13,9 @@
     <h2 style="font-size: 18px; font-weight:bold;">
       ${c.paste.title or h.tag.i("No title provided")}
       <span style="font-size:0.8em; font-weight: normal;">by
-      <em>${c.paste.author or "anonymous"}</em></span>
+      <em>${c.paste.author or "anonymous"}</em>
+      (<a href="${h.url_for('newpaste', id=c.paste.id)}">Reply</a>)
+      </span>
     </h2>
     <div class="language">
       <b>Language:</b> <span style="lang">${c.langdict[c.paste.language or 'text']}</span>

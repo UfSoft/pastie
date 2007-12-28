@@ -17,15 +17,19 @@ paste_table = Table('pastes', metadata,
     Column('date', types.DateTime, nullable=False),
     Column('language', types.String(30), nullable=False),
     Column('code', types.Unicode, nullable=False),
+    Column('parent_id', types.Integer, ForeignKey('pastes.id'), nullable=True)
 )
 
 pastetags_table = Table('paste_tags', metadata,
-    Column('tag_id', types.Integer, ForeignKey('tags.id', ondelete='RESTRICT'), primary_key=True),
-    Column('paste_id', types.Integer, ForeignKey('pastes.id', ondelete='CASCADE'), primary_key=True),
+    Column('tag_id', types.Integer,
+           ForeignKey('tags.id', ondelete='RESTRICT'), primary_key=True),
+    Column('paste_id', types.Integer,
+           ForeignKey('pastes.id', ondelete='CASCADE'), primary_key=True),
 )
 
 class Paste(object):
-    def __init__(self, author=None, title='', language=None, code='', tags=''):
+    def __init__(self, author=None, title='', language=None,
+                 code='', tags='', parent_id=None):
         if not author:
             author = 'anonymous'
         self.author = author
@@ -51,10 +55,13 @@ class Paste(object):
 
     @classmethod
     def tag_sizes(cls):
-        """This method returns all the tags and their relative size for a tagcloud"""
-        results = Session.execute(select([tag_table.c.name, func.count(tag_table.c.name)],
-                         from_obj=[tag_table.join(pastetags_table).join(paste_table)],
-                         group_by=[tag_table.c.name]))
+        """This method returns all the tags and their relative size
+        for a tagcloud"""
+        results = Session.execute(
+            select([tag_table.c.name, func.count(tag_table.c.name)],
+                   from_obj=[tag_table.join(pastetags_table).join(paste_table)],
+                   group_by=[tag_table.c.name])
+        )
         tag_counts = results.fetchall()
         total = sum([tag[1] for tag in tag_counts])
         totalcounts = []
@@ -67,7 +74,12 @@ mapper(Paste, paste_table,
     properties=dict(
         tags=relation(Tag, secondary=pastetags_table, lazy=False,
                       backref=backref('pastes',
-                                      order_by=desc(paste_table.c.date)))
+                                      order_by=desc(paste_table.c.date))),
+        children=relation(Paste,
+                          primaryjoin=paste_table.c.parent_id==paste_table.c.id,
+                          cascade='all',
+                          backref=backref('parent',
+                                          remote_side=[paste_table.c.id]))
     ),
     order_by=[desc(paste_table.c.date)]
 )

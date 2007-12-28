@@ -14,14 +14,17 @@ class PastiesController(BaseController):
         c.langdict = langdict
 
     @rest.dispatch_on(POST="new_POST")
-    def new(self):
+    def new(self, id=None):
         log.debug('On new')
         c.tags = [str(tag.name) for tag in Session.query(Tag).all()]
         c.public_key = config['spamfilter.recaptcha.public_key']
+        if id:
+            c.parent = Session.query(Paste).get(int(id))
+            log.debug("Replying to paste with id: %s", id)
         return render('paste.new')
 
     @validate(template='paste.new', schema=model.forms.NewPaste(), form='new')
-    def new_POST(self):
+    def new_POST(self, id=None):
         log.debug('On create')
         author = request.POST['author']
         title = request.POST['title']
