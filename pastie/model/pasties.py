@@ -74,18 +74,14 @@ class Paste(object):
 
     @staticmethod
     def resolve_root(paste_id):
-        print 'resolve root called', repr(paste_id)
         pastes = Session.query(Paste)
         while True:
             paste = pastes.filter(Paste.c.id == paste_id).first()
-            print 1, paste, paste_id
             if paste is None:
                 return
             print repr(paste.parent_id)
             if not paste.parent_id:
-                print 'returnin no parent'
                 return paste
-            print 'assigning parent_id', paste.parent_id, 'to paste_id'
             paste_id = paste.parent_id
 
 mapper(Paste, paste_table,
