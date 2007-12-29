@@ -23,10 +23,8 @@
       <li py:for="paste in c.paginator">${paste_item(paste)}</li>
     </ul>
 
-    ${Markup(c.paginator.pager(link_var='id', framework='jquery',
-             ajax_id='paste_items'))}
+    ${Markup(c.paginator.pager(link_var='id'))}
     </div>
-
 
     <script type="text/javascript">
       $('a.viewtoggle').bind('click', function() {

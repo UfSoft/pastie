@@ -48,7 +48,7 @@ class PastiesController(BaseController):
     @beaker_cache(key=None, expire=45, type="memory") #, query_args=True)
     def list(self, id):
         c.paginator = Page(Session.query(Paste), current_page=id or 1,
-                           items_per_page=25,
+                           items_per_page=5,
                            sqlalchemy_engine=config['pylons.g'].sa_engine)
         log.debug(c.paginator)
         return render('paste.index')

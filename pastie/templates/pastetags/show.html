@@ -25,5 +25,13 @@
 
     ${Markup(c.paginator.pager(link_var='page'))}
 
+    <script type="text/javascript">
+      $('a.viewtoggle').bind('click', function() {
+        $('div.code_' +  $(this).attr('id').replace('source_', '')).slideToggle(
+         5, $(this).html() == 'View' ? $(this).html('Hide') : $(this).html('View')
+        );
+      });
+    </script>
+
   </body>
 </html>
