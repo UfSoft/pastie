@@ -8,7 +8,7 @@ from sqlalchemy.orm import backref, mapper, relation
 from pastie.model.metadata import metadata, Session
 from pastie.model.common import tag_table, Tag
 
-mapper = Session.mapper
+#mapper = Session.mapper
 
 paste_table = Table('pastes', metadata,
     Column('id', types.Integer, primary_key=True),
@@ -17,7 +17,8 @@ paste_table = Table('pastes', metadata,
     Column('date', types.DateTime, nullable=False),
     Column('language', types.String(30), nullable=False),
     Column('code', types.Unicode, nullable=False),
-    Column('parent_id', types.Integer, ForeignKey('pastes.id'), nullable=True)
+    Column('parent_id', types.Integer, ForeignKey('pastes.id'), nullable=True,
+           default=None)
 )
 
 pastetags_table = Table('paste_tags', metadata,

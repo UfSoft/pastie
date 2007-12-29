@@ -23,13 +23,13 @@
 
   <py:def function="page_nav">
     <a py:if="not c.paginator.current.first"
-       href="${h.url_for(page=(c.paginator.current_page-1))}">&lt;- Prev</a>
+       href="${h.url_for(page=(c.paginator.current_page-1))}">&larr; Prev</a>
     <span py:if="c.paginator.current.first"
-          style="color: #bbb;">&lt;- Prev</span>
+          style="color: #bbb;">&larr;  Prev</span>
     <a py:if="not c.paginator.current.last"
-       href="${h.url_for(page=(c.paginator.current_page+1))}">Next -&gt;</a>
+       href="${h.url_for(page=(c.paginator.current_page+1))}">Next &rarr;</a>
     <span py:if="c.paginator.current.last"
-          style="color: #bbb;">Next -&gt;</span>
+          style="color: #bbb;">Next &rarr;</span>
   </py:def>
 
 

@@ -4,6 +4,8 @@ import logging
 from pastie.lib.base import *
 from pastie.lib.highlight import formatter, langdict
 from sqlalchemy import desc, func
+#from alternativepaginator import Page
+from pastie.lib.paginator import Page
 
 log = logging.getLogger(__name__)
 
@@ -36,23 +38,20 @@ class PastiesController(BaseController):
         #Session.save_or_update(paste)
         #Session.save(paste)
         Session.commit()
-        cache.get_cache('pasties.index').clear()
+        cache.get_cache('pasties.list').clear()
         redirect_to('paste', id=paste.id)
 
 #    @beaker_cache(expire=45, type="ext:memcached", query_args=True)
+    #@beaker_cache(key=None, expire=45, type="memory") #, query_args=True)
+    def index(self, id=1):
+        redirect_to(action='list', id=id)
+
     @beaker_cache(key=None, expire=45, type="memory") #, query_args=True)
-    def index(self):
-        show_today = request.GET.get('restrict', '') == 'today'
-        if show_today:
-            query_args = [func.date(Paste.c.date)==func.current_date()]
-        else:
-            query_args = []
-#        c.paginator, c.pastes = paginate(Session.query(Paste).all(),
-        c.paginator, c.pastes = paginate(Paste.query(),
-                                         per_page=20,
-                                         query_args=query_args,
-                                         _session=Session)
-        log.debug(c.pastes)
+    def list(self, id=1):
+        c.paginator = Page(Session.query(Paste), current_page=id,
+                           items_per_page=20,
+                           sqlalchemy_engine=config['pylons.g'].sa_engine)
+        log.debug(c.paginator)
         return render('paste.index')
 
     def show(self, id):
