@@ -41,15 +41,13 @@ class PastiesController(BaseController):
         cache.get_cache('pasties.list').clear()
         redirect_to('paste', id=paste.id)
 
-#    @beaker_cache(expire=45, type="ext:memcached", query_args=True)
-    #@beaker_cache(key=None, expire=45, type="memory") #, query_args=True)
     def index(self, id=1):
         redirect_to(action='list', id=id)
 
     @beaker_cache(key=None, expire=45, type="memory") #, query_args=True)
-    def list(self, id=1):
-        c.paginator = Page(Session.query(Paste), current_page=id,
-                           items_per_page=20,
+    def list(self, id):
+        c.paginator = Page(Session.query(Paste), current_page=id or 1,
+                           items_per_page=3,
                            sqlalchemy_engine=config['pylons.g'].sa_engine)
         log.debug(c.paginator)
         return render('paste.index')

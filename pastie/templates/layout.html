@@ -61,7 +61,7 @@
                                             h.url_for('newpaste')) }</li>
             <li>${ h.link_to_unless_current(_('All'),
                                             h.url_for(controller='pasties',
-                                            action='list', id=None)) }</li>
+                                            action='list', id=1)) }</li>
             <li>${ h.link_to_unless_current(_('Tags'),
                                             h.url_for('pastetags')) }</li>
           </ul>
@@ -104,6 +104,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 21 2007-12-29 18:16:12Z s0undt3ch $
+$Id: layout.html 22 2007-12-29 18:26:58Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->
