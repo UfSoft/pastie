@@ -19,11 +19,11 @@ def make_map():
     # CUSTOM ROUTES HERE
     map.connect('newpaste', '', controller='pasties', action='new')
     map.connect('list', '/list/:id', controller='pasties', action='list')
-    map.connect('paste', '/:id', controller="pasties", action='show')
-    map.connect('pastetree', '', controller='pasties', action='tree')
+    map.connect('tagcloud', '/tags', controller='pastetags', action='index')
     map.connect('pastetag', '/tag/:id/:page',
                 controller='pastetags', action='show', id=None, page=1)
-    map.connect('tagcloud', '/tags', controller='pastetags', action='index')
+    map.connect('paste', '/:id', controller="pasties", action='show')
+    map.connect('pastetree', '', controller='pasties', action='tree')
 #    map.connect('pasteslist', ':controller/list/:id', controller='pasties',
 #                action='list', id=1)
 #    map.connect('paste', '', contr)
