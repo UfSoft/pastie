@@ -24,11 +24,6 @@ def make_map():
     map.connect('tagcloud', '/tags', controller='pastetags', action='index')
     map.connect('paste', '/:id', controller="pasties", action='show')
     map.connect('pastetree', '', controller='pasties', action='tree')
-#    map.connect('pasteslist', ':controller/list/:id', controller='pasties',
-#                action='list', id=1)
-#    map.connect('paste', '', contr)
-    #map.resource('pastetag', 'pastetags')
-#    map.resource('paste', 'pasties')
 
 
     map.connect(':controller/:action/:id')

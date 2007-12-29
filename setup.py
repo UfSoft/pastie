@@ -14,7 +14,7 @@ setup(
     author_email='ufs@ufsoft.org',
     url='http://pastie.ufsoft.org',
     #install_requires=["Pylons>=0.9.6"],
-    install_requires=["Pylons>=0.9.6rc3dev-r2352", "pygments"],
+    install_requires=["Pylons>=0.9.6", "pygments"],
     packages=find_packages(exclude=['ez_setup']),
     include_package_data=True,
     test_suite='nose.collector',

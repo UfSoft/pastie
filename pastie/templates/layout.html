@@ -14,7 +14,7 @@
           content="application/xhtml+xml; charset=UTF-8" />
     <meta name="author" content="Pedro Algarvio" />
     <meta name="copyright" content="Pedro Algarvio" />
-    <link rel="shortcut icon" href="${h.url_for('img')}/favicon.ico"/>
+    <link rel="shortcut icon" href="${h.url_for('/img', qualified=True)}/favicon.ico"/>
     ${ h.stylesheet_link_tag('/css/initial.css') }
     ${ h.stylesheet_link_tag('/css/main.css') }
     ${ h.stylesheet_link_tag('/css/pygments_default.css') }
@@ -105,6 +105,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 23 2007-12-29 21:09:28Z s0undt3ch $
+$Id: layout.html 28 2007-12-29 22:13:38Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->
