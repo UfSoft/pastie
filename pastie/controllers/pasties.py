@@ -39,6 +39,7 @@ class PastiesController(BaseController):
         #Session.save(paste)
         Session.commit()
         cache.get_cache('pasties.list').clear()
+        cache.get_cache('pastetags.show').clear()
         redirect_to('paste', id=paste.id)
 
     def index(self, id=1):
@@ -47,7 +48,7 @@ class PastiesController(BaseController):
     @beaker_cache(key=None, expire=45, type="memory") #, query_args=True)
     def list(self, id):
         c.paginator = Page(Session.query(Paste), current_page=id or 1,
-                           items_per_page=3,
+                           items_per_page=25,
                            sqlalchemy_engine=config['pylons.g'].sa_engine)
         log.debug(c.paginator)
         return render('paste.index')
@@ -67,7 +68,7 @@ class PastiesController(BaseController):
     def tree(self, id):
         paste = Paste.resolve_root(int(id))
         if not paste:
-            abor(404)
+            abort(404)
         c.paste = paste
         c.id = int(id)
         print c.paste, c.id

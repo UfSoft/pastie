@@ -1,6 +1,7 @@
 import logging
 
 from pastie.lib.base import *
+from pastie.lib.paginator import Page
 
 log = logging.getLogger(__name__)
 
@@ -13,10 +14,9 @@ class PastetagsController(BaseController):
         return render('pastetags.tagcloud')
 
 #    @beaker_cache(expire=45, type="ext:memcached", query_args=True)
-    @beaker_cache(expire=45, type="memory", query_args=True)
-    def show(self, id):
-        query_args = [Paste.tags.any(name=str(id))]
-        c.paginator, c.pastes = paginate(Paste.query(), per_page=20,
-                                         query_args=query_args,
-                                         _session=Session)
+    @beaker_cache(key=None, expire=45, type="memory", query_args=True)
+    def show(self, id, page=1):
+        query = Session.query(Paste).filter(Paste.tags.any(name=str(id)))
+        c.paginator = Page(query, current_page=page or 1, items_per_page=25,
+                           sqlalchemy_engine=config['pylons.g'].sa_engine)
         return render('pastetags.show')

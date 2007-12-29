@@ -11,18 +11,19 @@
   </head>
   <body>
     <h2>Pastes tagged with ${str(c.id)}<span style="color: grey; font-size: 14px;">
-      (Displaying ${c.paginator.current.first_item + 1} through
-      ${c.paginator.current.last_item} of ${c.paginator.item_count})</span>
+      (Displaying ${c.paginator.first_item + 1} through
+      ${c.paginator.last_item + 1} of ${c.paginator.item_count})</span>
     </h2>
 
-    ${ page_nav()}
+    ${Markup(c.paginator.pager(link_var='page'))}
 
     <ul>
-      <li py:for="paste in c.pastes">
+      <li py:for="paste in c.paginator">
         ${paste_item(paste)}
       </li>
     </ul>
 
-    ${page_nav()}
+    ${Markup(c.paginator.pager(link_var='page'))}
+
   </body>
 </html>

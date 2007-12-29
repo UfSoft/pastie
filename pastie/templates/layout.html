@@ -14,6 +14,7 @@
           content="application/xhtml+xml; charset=UTF-8" />
     <meta name="author" content="Pedro Algarvio" />
     <meta name="copyright" content="Pedro Algarvio" />
+    <link rel="shortcut icon" href="${h.url_for('img')}/favicon.ico"/>
     ${ h.stylesheet_link_tag('/css/initial.css') }
     ${ h.stylesheet_link_tag('/css/main.css') }
     ${ h.stylesheet_link_tag('/css/pygments_default.css') }
@@ -53,17 +54,16 @@
       <span id="message" class="sys-message" py:if="c.message">
         ${ c.message }
       </span>
-      <div id="header"><span>Pasties Pastebin</span>
+      <div id="header"><span>${h.image_tag('/img/logo.png')}</span>
       </div> <!--! header div ended -->
         <div id="menu">
           <ul>
             <li>${ h.link_to_unless_current(_('New'),
                                             h.url_for('newpaste')) }</li>
             <li>${ h.link_to_unless_current(_('All'),
-                                            h.url_for(controller='pasties',
-                                            action='list', id=1)) }</li>
+                                            h.url_for('list')) }</li>
             <li>${ h.link_to_unless_current(_('Tags'),
-                                            h.url_for('pastetags')) }</li>
+                                            h.url_for('tagcloud')) }</li>
           </ul>
         </div> <!--! menu div ended -->
       <div id="content">
@@ -80,6 +80,7 @@
     </div>
     <script type="text/javascript">
       $('#copy2').css('left', -200);
+      $('#copy1').css('left', 0);
       $('#copy1').click(function() {
         $(this).animate({left: -200, opacity: 0},
                         {queue: true, duration: 600, easing: 'easeOutSine'}
@@ -104,6 +105,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 22 2007-12-29 18:26:58Z s0undt3ch $
+$Id: layout.html 23 2007-12-29 21:09:28Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->
