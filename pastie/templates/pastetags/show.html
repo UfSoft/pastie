@@ -27,8 +27,9 @@
 
     <script type="text/javascript">
       $('a.viewtoggle').bind('click', function() {
-        $('div.code_' +  $(this).attr('id').replace('source_', '')).slideToggle(
-         5, $(this).html() == 'View' ? $(this).html('Hide') : $(this).html('View')
+        $(this).html() == 'View' ? $(this).html('Hide') : $(this).html('View');
+        $('div.code_' +  $(this).attr('id').replace('source_', '')).animate(
+          {height: 'toggle'}, 300, 'easeOutExpo'
         );
       });
     </script>

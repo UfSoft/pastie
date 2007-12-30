@@ -11,10 +11,6 @@ log = logging.getLogger(__name__)
 
 class PastiesController(BaseController):
 
-    def __before__(self):
-        c.model = model
-        c.langdict = langdict
-
     @rest.dispatch_on(POST="new_POST")
     def new(self, id=None):
         log.debug('On new')
@@ -38,14 +34,21 @@ class PastiesController(BaseController):
         #Session.save_or_update(paste)
         #Session.save(paste)
         Session.commit()
-        cache.get_cache('pasties.list').clear()
-        cache.get_cache('pastetags.show').clear()
+
+        # Clear the pastes listing
+        cache.get_cache('pastie.controllers.pasties.list').clear()
+        # Clear the tagcloud
+        cache.get_cache('pastie.controllers.pastetags.index').clear()
+        # Clear the "pastes with tag" chache
+        tagscache = cache.get_cache('pastie.controllers.pastetags.show')
+        for tag in paste.tags:
+            tagscache.remove_value(tag.name)
         redirect_to('paste', id=paste.id)
 
     def index(self, id=1):
         redirect_to(action='list', id=id)
 
-    @beaker_cache(key=None, expire=45, type="memory") #, query_args=True)
+    @beaker_cache(key='id', expire=45, type="memory")
     def list(self, id):
         c.paginator = Page(Session.query(Paste), current_page=id or 1,
                            items_per_page=25,
@@ -56,7 +59,7 @@ class PastiesController(BaseController):
     def show(self, id):
         if not re.match(r'^\d+$', id):
             abort(404)
-
+        c.langdict = langdict
         paste = Session.query(Paste).filter_by(id=id).first()
         if not paste:
             abort(404)
@@ -70,6 +73,5 @@ class PastiesController(BaseController):
         if not paste:
             abort(404)
         c.paste = paste
-        c.id = int(id)
-        print c.paste, c.id
+        c.id = paste.id or int(id)
         return render('paste.tree')

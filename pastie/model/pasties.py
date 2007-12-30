@@ -79,7 +79,6 @@ class Paste(object):
             paste = pastes.filter(Paste.c.id == paste_id).first()
             if paste is None:
                 return
-            print repr(paste.parent_id)
             if not paste.parent_id:
                 return paste
             paste_id = paste.parent_id
