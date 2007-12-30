@@ -19,8 +19,8 @@
     ${ h.stylesheet_link_tag('/css/main.css') }
     ${ h.stylesheet_link_tag('/css/pygments_default.css') }
 
-    ${ h.javascript_include_tag('/js/jquery-latest' + (c.debug_mode and '.' or '.pack.') + 'js') }
-    ${ h.javascript_include_tag('/js/jquery.easing.js') }
+    ${ h.javascript_include_tag('/js/jquery-latest' + (c.debug_mode and '.' or '.min.') + 'js') }
+    ${ h.javascript_include_tag('/js/jquery.easing' + (c.debug_mode and '.' or '.min.') + 'js') }
     <!--
     ${ h.javascript_include_tag('/js/jquery.dimensions.pack.js') }
     ${ h.javascript_include_tag('/js/jquery.interface.js') }
@@ -102,6 +102,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 37 2007-12-30 19:57:53Z s0undt3ch $
+$Id: layout.html 38 2007-12-30 20:46:14Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->
