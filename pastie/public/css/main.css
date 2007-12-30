@@ -173,13 +173,14 @@ textarea:focus {
   float: right;
   background: url(../img/cell_bg.png) no-repeat left bottom;
   font-weight: bold;
+  font-size: 0.6em;
 }
 
 #paste_menu ul {
   margin: 0;
-  padding: 5px 5px 5px 20px; list-style: none;
+  padding: 0px 5px 15px 20px; list-style: none;
 }
-#paste_menu li { display: inline; padding: 5px;}
+#paste_menu li { display: inline; }
 #paste_menu li a { color: #ccc; text-decoration: none; }
 #paste_menu li a:hover { color: #fff; }
 
@@ -188,3 +189,5 @@ span.current_id {
   background-color: #c5ffbc;
   font-style: italic;
 }
+
+.lineanchorlinks { text-decoration: none; color: white; }
