@@ -16,11 +16,22 @@ class ErrorController(BaseController):
     """
 
     def document(self):
+        prefix=request.environ.get('SCRIPT_NAME', '')
+        code = request.params.get('code', '')
+        message = request.params.get('message', '')
+        if not config.get('debug', False):
+            return self.pastie_document(prefix, code, message)
+        return self.pylons_document(prefix, code, message)
+
+    def pastie_document(self, prefix, code, message):
+        c.code = code
+        c.error_message = message
+        return render('error.index')
+
+    def pylons_document(self, prefix, code, message):
         """Render the error document"""
         page = error_document_template % \
-            dict(prefix=request.environ.get('SCRIPT_NAME', ''),
-                 code=request.params.get('code', ''),
-                 message=request.params.get('message', ''))
+            dict(prefix=prefix, code=code, message=message)
         return page
 
     def img(self, id):
