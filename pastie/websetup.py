@@ -4,6 +4,7 @@ import logging
 from paste.deploy import appconfig
 from pylons import config
 from sqlalchemy import *
+import os
 
 from pastie.config.environment import load_environment
 
@@ -25,5 +26,17 @@ def setup_config(command, filename, section, vars):
 
     print "Creating tables"
     model.metadata.create_all(engine)
+
+    print "Minifying javascripts"
+    import os
+    from jsmin import JavascriptMinify
+    jsbase = os.path.join(os.path.dirname(__file__), 'public', 'js')
+    for js in ['jquery-latest.js', 'jquery.easing.js', 'jquery.autocomplete.js']:
+        jsm = JavascriptMinify()
+        jspath = os.path.join(jsbase, js)
+        minified = os.path.join(jsbase, js[:-3]+'.min.js')
+        print '  ', jspath, '->', minified,
+        jsm.minify(open(jspath, 'r'), open(minified, 'w'))
+        print 'Done'
     print "Successfully setup"
 
