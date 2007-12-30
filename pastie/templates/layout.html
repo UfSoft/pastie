@@ -22,7 +22,6 @@
 
     ${ h.javascript_include_tag('/js/jquery-latest.js') }
     ${ h.javascript_include_tag('/js/jquery.easing.js') }
-    ${ h.javascript_include_tag('/js/jquery.pngFix.js') }
     <!--
     ${ h.javascript_include_tag('/js/jquery.dimensions.pack.js') }
     ${ h.javascript_include_tag('/js/jquery.interface.js') }
@@ -35,7 +34,7 @@
     </script>
 
     ${select("*|text()")}
-    <!--! The above allows templates inheriting this one to add stuff to the head -->
+
 
   </head>
 
@@ -81,23 +80,19 @@
       </span>
     </div>
     <script type="text/javascript">
-      $(function(){$(document).pngFix();});
       $('#copy2').css('left', -200);
       $('#copy1').css('left', 0);
       $('#copy1').click(function() {
-        $(this).animate({left: -200, opacity: 0},
-                        {queue: true, duration: 600, easing: 'easeOutSine'}
-        );
-        $('#copy2').animate({left: 0, opacity:100},
-                            {queue: false, duration: 300, easing: 'easeInExpo'}
-        );
+        $(this).animate({left: -200}, 300, 'easeOutSine', function() {
+          $('#copy2').animate({left: 0, opacity:100},
+                              {duration: 300, easing: 'easeInExpo'});
+        });
       });
       $('#copy2').click(function() {
-        $(this).animate({left: -200},
-                        {queue: false, duration: 600, easing: 'easeOutSine'});
-        $('#copy1').animate({left: 0, opacity: 100},
-                            {duration: 300, easing: 'easeInExpo'}
-        );
+        $(this).animate({left: -200}, 300, 'easeOutSine', function() {
+          $('#copy1').animate({left: 0},
+                              {duration: 600, easing: 'easeInExpo'});
+        });
       });
     </script>
     <script type="text/javascript" py:if="c.message">
@@ -108,6 +103,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 30 2007-12-30 12:32:50Z s0undt3ch $
+$Id: layout.html 31 2007-12-30 14:11:49Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->
