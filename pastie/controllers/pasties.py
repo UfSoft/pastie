@@ -73,5 +73,5 @@ class PastiesController(BaseController):
         if not paste:
             abort(404)
         c.paste = paste
-        c.id = paste.id or int(id)
+        c.id = int(id)
         return render('paste.tree')
