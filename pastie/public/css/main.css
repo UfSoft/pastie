@@ -61,7 +61,7 @@
   padding: 0px 25px; margin: 0 auto; margin-top: 5px; margin-bottom: 30px; width: 95%;
 }
 #content h2 { margin-left: 30px; margin-top: 0px; text-align: center; margin-right: 150px; }
-#content dl { margin-left: 20px; }
+#content dl { margin-left: 40px; }
 div.tags, div.language { margin-left: 30px; margin-right: 150px; text-align: center; }
 
 /* Error Message shown on forms with invalid fields */
