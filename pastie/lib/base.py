@@ -26,6 +26,7 @@ class BaseController(WSGIController):
         # the request is routed to. This routing information is
         # available in environ['pylons.routes_dict']
         c.app_name = config.get('pastie_name', '')
+        c.debug_mode = config.get('debug', False)
         try:
             return WSGIController.__call__(self, environ, start_response)
         finally:
