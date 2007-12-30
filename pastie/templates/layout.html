@@ -22,6 +22,7 @@
 
     ${ h.javascript_include_tag('/js/jquery-latest.js') }
     ${ h.javascript_include_tag('/js/jquery.easing.js') }
+    ${ h.javascript_include_tag('/js/jquery.pngFix.js') }
     <!--
     ${ h.javascript_include_tag('/js/jquery.dimensions.pack.js') }
     ${ h.javascript_include_tag('/js/jquery.interface.js') }
@@ -80,6 +81,7 @@
       </span>
     </div>
     <script type="text/javascript">
+      $(function(){$(document).pngFix();});
       $('#copy2').css('left', -200);
       $('#copy1').css('left', 0);
       $('#copy1').click(function() {
@@ -106,6 +108,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 29 2007-12-30 12:16:40Z s0undt3ch $
+$Id: layout.html 30 2007-12-30 12:32:50Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->
