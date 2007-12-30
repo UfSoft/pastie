@@ -54,7 +54,11 @@
       <span id="message" class="sys-message" py:if="c.message">
         ${ c.message }
       </span>
-      <div id="header"><span>${h.image_tag('/img/logo.png')}</span>
+      <div id="header">
+        <a href="${h.url_for('/')}" title="${'%s Pastie\'s Home' % c.app_name}"
+           alt="${'%s Pastie\'s Home' % c.app_name}">
+          ${h.image_tag('/img/logo.png')}
+        </a>
       </div> <!--! header div ended -->
         <div id="menu">
           <ul>
@@ -102,6 +106,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 38 2007-12-30 20:46:14Z s0undt3ch $
+$Id: layout.html 40 2007-12-30 21:10:02Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->

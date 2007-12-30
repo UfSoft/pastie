@@ -8,10 +8,10 @@
     background: url(../img/header_bg.png) repeat-x bottom left;
 }
 
-#header span {
-  margin-left: -8px;
-  font-size: 1.5em; padding: 20px 10px 0px 10px;
-}
+#header a { margin-left: -8px; padding: 20px 10px 0px 10px; }
+#header a, #header a:visited { text-decoration: none; font-size: 1.5em; }
+#header img { border: none; }
+
 #fakebody {
   position: relative; min-height: 100%; width: 100%;
   margin: 0 auto; background-color: #fff; */
