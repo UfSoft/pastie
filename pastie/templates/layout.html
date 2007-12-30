@@ -8,7 +8,7 @@
 
   <head py:match="head">
     <title py:with="title = unicode(select('title/text()'))">
-      ${ '  -  '.join(filter(None, [u'Pastie', title])) }
+      ${ '  -  '.join(filter(None, [u"%s Pastie" % c.app_name , title])) }
     </title>
     <meta http-equiv="content-type"
           content="application/xhtml+xml; charset=UTF-8" />
@@ -102,6 +102,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 34 2007-12-30 14:28:53Z s0undt3ch $
+$Id: layout.html 36 2007-12-30 19:41:09Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->

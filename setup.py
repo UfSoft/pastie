@@ -14,7 +14,7 @@ setup(
     author_email='ufs@ufsoft.org',
     url='http://pastie.ufsoft.org',
     #install_requires=["Pylons>=0.9.6"],
-    install_requires=["Pylons>=0.9.6", "pygments"],
+    install_requires=["Pylons>=0.9.6", "pygments", "Genshi", "SQLAlchemy"],
     packages=find_packages(exclude=['ez_setup']),
     include_package_data=True,
     test_suite='nose.collector',
