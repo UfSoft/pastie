@@ -6,7 +6,7 @@
       xmlns:xi="http://www.w3.org/2001/XInclude">
   <xi:include href="../layout.html" />
   <head>
-    ${ h.javascript_include_tag('/js/jquery.autocomplete' + (c.debug_mode and '.' or '.min.') + 'js') }
+    ${ h.javascript_include_tag('/js/jquery.autocomplete.js', minified=True) }
     ${ h.stylesheet_link_tag('/css/jquery.autocomplete.css') }
     <title>New Paste</title>
   </head>
