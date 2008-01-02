@@ -15,12 +15,15 @@
     <meta name="author" content="Pedro Algarvio" />
     <meta name="copyright" content="Pedro Algarvio" />
     <link rel="shortcut icon" href="${h.url_for('/img', qualified=True)}/favicon.png"/>
-    ${ h.stylesheet_link_tag('/css/initial.css') }
-    ${ h.stylesheet_link_tag('/css/main.css') }
-    ${ h.stylesheet_link_tag('/css/pygments_default.css') }
+
+    ${ h.stylesheet_link_tag('/css/initial.css', '/css/main.css',
+                             '/css/pygments_default.css',
+                             '/css/jquery.autocomplete.css'
+                             minified=False, combined=True) }
 
     ${ h.javascript_include_tag('/js/jquery-latest.js', '/js/jquery.easing.js',
-                                minified=True) }
+                                '/js/jquery.autocomplete.js',
+                                minified=False, combined=True) }
     <!--
     ${ h.javascript_include_tag('/js/jquery.dimensions.pack.js') }
     ${ h.javascript_include_tag('/js/jquery.interface.js') }
@@ -106,6 +109,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 44 2007-12-31 16:23:39Z s0undt3ch $
+$Id: layout.html 46 2008-01-02 21:19:53Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->
