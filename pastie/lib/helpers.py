@@ -10,6 +10,7 @@ import os
 import logging
 from pylons.decorators.cache import beaker_cache
 import StringIO
+import re
 
 
 log = logging.getLogger(__name__)
@@ -106,16 +107,30 @@ def stylesheet_link_tag(*sources, **options):
         return [httpbase + fname]
 
     @beaker_cache(key='sources', expire='never', type='dbm')
-    def get_sources(sources):
-        # We don't have a CSS minifier yet
-        return sources
+    def get_sources(sources, fs_root):
+        log.debug('Generating minified sources if needed')
+        from pastie.lib.cssmin import CSSMinify
+        cssm = CSSMinify()
+        _sources = []
+
+        for source in sources:
+            _source = os.path.join(fs_root, *(source[:-4]+'.min.css').split('/'))
+            if os.path.exists(_source):
+                _sources.append(source[:-4]+'.min.css')
+            else:
+                _source = os.path.join(fs_root, *source.split('/'))
+                minified = _source[:-4]+'.min.css'
+                log.debug('minifying %s -> %s', source,
+                            source[:-4]+'.min.css')
+                cssm.minify(open(_source, 'r'), open(minified, 'w'))
+                _sources.append(source[:-4]+'.min.css')
+        return _sources
 
     if not config.get('debug', False):
         fs_root = root = config.get('pylons.paths').get('static_files')
         if options.pop('combined', False):
             sources = combine_sources([source for source in sources], fs_root)
 
-    if options.pop('minified', False):
-        if not config.get('debug', False):
-            sources = get_sources([source for source in sources])
+        if options.pop('minified', False):
+            sources = get_sources([source for source in sources], fs_root)
     return __stylesheet_link_tag(*sources, **options)
