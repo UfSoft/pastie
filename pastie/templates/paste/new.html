@@ -25,7 +25,7 @@
         <dt>Author</dt>
         <dd>
           <input type="text" id="id_author" class="vTextField" name="author"
-                 size="30" value="" maxlength="100" />
+                 size="30" value="$c.author" maxlength="100" />
           <span class="error-message" py:if="'author' in c.errors">
             $c.errors.author
           </span>
@@ -39,8 +39,9 @@
             <option value="$lexer" py:if="c.parent"
                     selected="${c.parent.language==lexer and 'selected' or ''}">
             ${lexers[lexer]}</option>
-            <option py:if="not c.parent"
-                    value="$lexer">${lexers[lexer]}</option>
+            <option py:if="not c.parent" value="$lexer"
+                    selected="${c.language==lexer and 'selected' or ''}">
+            ${lexers[lexer]}</option>
             </py:for>
           </select>
         </dd>

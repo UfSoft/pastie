@@ -15,6 +15,14 @@ class PastiesController(BaseController):
     def new(self, id=None):
         log.debug('On new')
         c.tags = [str(tag.name) for tag in Session.query(Tag).all()]
+        if 'author' in request.cookies:
+            c.author = request.cookies['author']
+        else:
+            c.author = ''
+        if 'language' in request.cookies:
+            c.language = request.cookies['language']
+        else:
+            c.language = ''
         c.public_key = config['spamfilter.recaptcha.public_key']
         if id:
             c.parent = Session.query(Paste).get(int(id))
@@ -43,6 +51,10 @@ class PastiesController(BaseController):
         tagscache = cache.get_cache('pastie.controllers.pastetags.show')
         for tag in paste.tags:
             tagscache.remove_value(tag.name)
+
+        # Set some defaults on user cookie
+        response.set_cookie('language', language, expires=31556926)
+        response.set_cookie('author', author, expires=31556926)
         redirect_to('paste', id=paste.id)
 
     def index(self, id=1):

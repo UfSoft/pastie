@@ -18,7 +18,7 @@ def make_map():
 
     # CUSTOM ROUTES HERE
     map.connect('newpaste', '', controller='pasties', action='new')
-    map.connect('xmlrpc', '/xmlrpc/:action/:id', controller='xmlrpc')
+    map.connect('xmlrpc', '/RPC2/:action/:id', controller='xmlrpc')
 #    map.connect('xmlrpc', '/xmlrpc/', controller='xmlrpc', action='index')
     map.connect('list', '/list/:id', controller='pasties', action='list')
     map.connect('pastetag', '/tag/:id/:page',
