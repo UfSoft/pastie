@@ -20,7 +20,7 @@ def make_map():
     map.connect('newpaste', '', controller='pasties', action='new')
     map.connect('xmlrpc', '/RPC2/:action/:id', controller='xmlrpc')
 #    map.connect('xmlrpc', '/xmlrpc/', controller='xmlrpc', action='index')
-    map.connect('list', '/list/:id', controller='pasties', action='list')
+    map.connect('list', '/list/:id', controller='pasties', action='list', id=1)
     map.connect('pastetag', '/tag/:id/:page',
                 controller='pastetags', action='show', id=None, page=1)
     map.connect('tagcloud', '/tags', controller='pastetags', action='index')
