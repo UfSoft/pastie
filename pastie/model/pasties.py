@@ -1,6 +1,7 @@
 """Pastebin tables and classes"""
 from datetime import datetime
 import math
+import difflib
 
 from sqlalchemy import desc, Column, ForeignKey, func, select, Table, types
 from sqlalchemy.orm import backref, mapper, relation
@@ -82,6 +83,19 @@ class Paste(object):
             if not paste.parent_id:
                 return paste
             paste_id = paste.parent_id
+
+    def compare_to(self, other, context_lines=4):
+        if not isinstance(other, Paste):
+            other = Session.query(Paste).get(int(other))
+        udiff = u'\n'.join(difflib.unified_diff(
+            self.code.splitlines(),
+            other.code.splitlines(),
+            fromfile='Paste #%d' % self.id,
+            tofile='Paste #%d' % other.id,
+            lineterm='',
+            n=context_lines)
+        )
+        return udiff
 
 mapper(Paste, paste_table,
     properties=dict(

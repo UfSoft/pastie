@@ -7,44 +7,44 @@
   <xi:include href="../layout.html" />
   <xi:include href="../helpers.html" />
   <head>
-    <title>${c.paste.id}</title>
+    <title>Diferences Between Pastes #${c.paste.id} and #${c.parent.id}</title>
   </head>
   <body>
     <h2 style="font-size: 18px; font-weight:bold;">
-      ${c.paste.title or h.tag.i("No title provided")}
-      <span style="font-size:0.8em; font-weight: normal;">by
-      <em>${c.paste.author or "anonymous"}</em>
-      </span>
+      Diferences Between Paste #${c.paste.id} and Parent Paste#${c.parent.id}
     </h2>
+
     <div class="language">
-      <b>Language:</b> <span style="lang">${c.langdict[c.paste.language or 'text']}</span>
+      <b>Paste Language:</b> <span style="lang">${c.langdict[c.paste.language or 'text']}</span>
     </div>
-    <div class="tags" py:if="c.paste.tags"><b>Tags: </b><span style="taglist">
+    <div class="tags" py:if="c.paste.tags"><b>Paste Tags: </b><span style="taglist">
       <py:for each="tag in c.paste.tags">
         ${ h.tag.a(tag.name, href=h.url_for('pastetag', id=tag.name)) }&nbsp;
       </py:for></span>
     </div><br/>
 
 
-    <div id="paste">
-    <div id="paste_menu"><ul>
+    <div class="language">
+      <b>Parent Language:</b> <span style="lang">${c.langdict[c.parent.language or 'text']}</span>
+    </div>
+    <div class="tags" py:if="c.paste.tags"><b>Parent Tags: </b><span style="taglist">
+      <py:for each="tag in c.parent.tags">
+        ${ h.tag.a(tag.name, href=h.url_for('pastetag', id=tag.name)) }&nbsp;
+      </py:for></span>
+    </div><br/>
+
+    <div id="paste" style="width: 100%;">
+    <div id="paste_menu"><ul style="right: 0px;">
       <li>
-        <a href="${h.url_for('replypaste', id=c.paste.id)}">Reply To Paste</a>
+        <a href="${h.url_for('paste', id=c.paste.id)}">See Current Paste</a>
       </li>
       <li>
-        <a href="${h.url_for('rawpaste', id=c.paste.id)}">Download Paste</a>
-      </li>
-      <li py:if="c.paste.parent_id">
-        <a href="${h.url_for('diffpaste', parent=c.paste.parent.id, id=c.paste.id)}"
-           title="Diferences between current and parent paste">Diff With Parent</a>
-      </li>
-      <li py:if="c.paste.children or c.paste.parent_id">
-        <a href="${h.url_for('pastetree', id=c.paste.id)}">Show Tree</a>
+        <a href="${h.url_for('paste', id=c.parent.id)}">See Parent Paste</a>
       </li>
       <li style="display:none;"><a class="toggle_linenumbers"
           href="javascript:;">Toggle Line Numbers</a></li>
     </ul></div>
-    ${h.code_highlight(c.paste)}
+    ${h.code_highlight(c.paste, diff_to=c.parent)}
     </div>
 
     <script type="text/javascript">

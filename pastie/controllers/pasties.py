@@ -88,3 +88,24 @@ class PastiesController(BaseController):
         c.paste = paste
         c.id = int(id)
         return render('paste.tree')
+
+    def download(self, id):
+        if not id:
+            redirect_to('list')
+        paste = Session.query(Paste).get(int(id))
+        if not paste:
+            abort(404)
+
+        mimetype = h.get_lexer_by_name(paste.language or 'text').mimetypes[0]
+        response.content_type__set(mimetype)
+        response.charset__set('utf-8')
+        response.write(paste.code)
+        return
+
+    def diff(self, id, parent):
+        c.langdict = langdict
+        c.paste = Session.query(Paste).get(int(id))
+        c.parent = Session.query(Paste).get(int(parent))
+#        c.diff = c.paste.compare_to(c.other)
+#        c.diff.language = 'diff'
+        return render('paste.diff')

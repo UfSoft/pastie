@@ -172,7 +172,7 @@ textarea:focus {
   padding-left: 15px;
   float: right;
   background: url(../img/cell_bg.png) no-repeat left bottom;
-  font-weight: bold;
+  /*font-weight: bold;*/
   font-size: 0.6em;
 }
 

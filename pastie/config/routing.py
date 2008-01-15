@@ -25,7 +25,10 @@ def make_map():
                 controller='pastetags', action='show', id=None, page=1)
     map.connect('tagcloud', '/tags', controller='pastetags', action='index')
     map.connect('paste', '/:id', controller="pasties", action='show')
-    map.connect('pastetree', '', controller='pasties', action='tree')
+    map.connect('pastetree', '/tree/:id', controller='pasties', action='tree')
+    map.connect('rawpaste', '/download/:id', controller='pasties', action='download')
+    map.connect('diffpaste', '/diff/:id/:parent', controller='pasties', action='diff')
+    map.connect('replypaste', '/reply/:id', controller='pasties', action='new')
 
 
     map.connect(':controller/:action/:id')
