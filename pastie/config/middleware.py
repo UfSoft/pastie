@@ -36,10 +36,16 @@ def make_app(global_conf, full_stack=True, **app_conf):
     # The Pylons WSGI app
     app = PylonsApp()
 
+
     # Establish the Registry for this application
     app = RegistryManager(app)
 
     # CUSTOM MIDDLEWARE HERE (filtered by error handling middlewares)
+
+    if 'profile' in app_conf and asbool(app_conf['profile']) and \
+        asbool(global_conf['debug']):
+        from pastie.lib.profilepylons import ProfilingMiddleware
+        app = ProfilingMiddleware(app, config)
 
     if asbool(full_stack):
         # Handle Python exceptions
@@ -53,5 +59,6 @@ def make_app(global_conf, full_stack=True, **app_conf):
     # Static files
     javascripts_app = StaticJavascripts()
     static_app = StaticURLParser(config['pylons.paths']['static_files'])
+
     app = Cascade([static_app, javascripts_app, app])
     return app

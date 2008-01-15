@@ -60,7 +60,8 @@ class PastiesController(BaseController):
     def index(self, id=1):
         redirect_to(action='list', id=id)
 
-    @beaker_cache(key='id', expire=45, type="memory")
+    # One how cache
+    @beaker_cache(key='id', expire=3600, type="memory")
     def list(self, id):
         c.paginator = Page(Session.query(Paste), current_page=id or 1,
                            items_per_page=25,
