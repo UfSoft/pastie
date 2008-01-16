@@ -5,7 +5,7 @@
 
   <!--! Define some usefull functions -->
   <py:def function="paste_item(paste)">
-    <span class="pasteitem">(<a href="#" id="source_${paste.id}"
+    <span class="pasteitem">(<a href="javascript:;" id="source_${paste.id}"
                                 class="viewtoggle">View</a>)</span>
     ${h.link_to(paste.title or 'Untitled',
       h.url_for('paste', id=paste.id))} by ${paste.author} posted on

@@ -11,36 +11,16 @@
   </head>
   <body>
     <h2 style="font-size: 18px; font-weight:bold;">
-      Diferences Between Paste #${c.paste.id} and Parent Paste#${c.parent.id}
+      Diferences Between Pastes #${c.paste.id} and #${c.parent.id}
     </h2>
 
-    <div class="language">
-      <b>Paste Language:</b> <span style="lang">${c.langdict[c.paste.language or 'text']}</span>
-    </div>
-    <div class="tags" py:if="c.paste.tags"><b>Paste Tags: </b><span style="taglist">
-      <py:for each="tag in c.paste.tags">
-        ${ h.tag.a(tag.name, href=h.url_for('pastetag', id=tag.name)) }&nbsp;
-      </py:for></span>
-    </div><br/>
-
-
-    <div class="language">
-      <b>Parent Language:</b> <span style="lang">${c.langdict[c.parent.language or 'text']}</span>
-    </div>
-    <div class="tags" py:if="c.paste.tags"><b>Parent Tags: </b><span style="taglist">
-      <py:for each="tag in c.parent.tags">
-        ${ h.tag.a(tag.name, href=h.url_for('pastetag', id=tag.name)) }&nbsp;
-      </py:for></span>
-    </div><br/>
+    <ul>
+      <li>Paste #$c.paste.id ${paste_item(c.paste)}</li>
+      <li>Paste #$c.parent.id ${paste_item(c.parent)}</li>
+    </ul>
 
     <div id="paste" style="width: 100%;">
     <div id="paste_menu"><ul style="right: 0px;">
-      <li>
-        <a href="${h.url_for('paste', id=c.paste.id)}">See Current Paste</a>
-      </li>
-      <li>
-        <a href="${h.url_for('paste', id=c.parent.id)}">See Parent Paste</a>
-      </li>
       <li style="display:none;"><a class="toggle_linenumbers"
           href="javascript:;">Toggle Line Numbers</a></li>
     </ul></div>
@@ -54,6 +34,11 @@
           var state = $(this).is(':hidden') ? 'show' : 'hide';
           $(this).animate({opacity: state}, 200);
         });
+      });
+      $('a.viewtoggle').bind('click', function() {
+        $('div.code_' +  $(this).attr('id').replace('source_', '')).slideToggle(
+         5, $(this).html() == 'View' ? $(this).html('Hide') : $(this).html('View')
+        );
       });
     </script>
   </body>
