@@ -102,7 +102,8 @@ class PastiesController(BaseController):
         response.write(paste.code)
         return
 
-    def diff(self, id, parent):
+    @beaker_cache(expire='never', type='memory') # don't expire cache
+    def diff(self, id=None, parent=None):
         c.langdict = langdict
         c.paste = Session.query(Paste).get(int(id))
         c.parent = Session.query(Paste).get(int(parent))
