@@ -8,6 +8,7 @@ from pylons.controllers import WSGIController
 from pylons.controllers.util import abort, etag_cache, redirect_to
 from pylons.decorators import jsonify, rest
 from pylons.decorators.cache import beaker_cache
+from pylons.decorators.secure import authenticate_form
 from pylons.i18n import _, ungettext, N_
 from pylons.templating import render
 

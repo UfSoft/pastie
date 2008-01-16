@@ -14,7 +14,6 @@ class myschema(schema.Schema):
 class NewPaste(myschema):
     author = UnicodeString(max=50, not_empty=True)
     title = UnicodeString(max=60, not_empty=True)
-    notabot = OneOf([u'most_likely'], hideList=True, not_empty=True)
     language = OneOf(languagelist, hideList=True, not_empty=True)
     code = All(AkismetValidator(not_empty=True),
                IPBlacklistValidator(not_empty=True))

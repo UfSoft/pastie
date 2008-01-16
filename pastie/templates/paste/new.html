@@ -53,8 +53,6 @@
           </dd>
       </dl>
 
-      ${h.js_obfuscate(h.tag.input(type='hidden', name='notabot', value='most_likely'))}
-
       <textarea id="id_code" py:if="c.parent"
                 class="vLargeTextField required" name="code"
                 rows="10" cols="80">${c.parent.code and c.parent.code or ''}</textarea>
@@ -76,6 +74,8 @@
       <input type="hidden" name="parent_id" id="parent_id"
              value="${ c.parent and c.parent.id or ''}"/>
 
+      ${h.js_obfuscate(h.tag.input(type='hidden', name='_authentication_token',
+                       value=c.authentication_token))}
       <div class="action">
         <input type="submit" value="Submit" />
         <input type="reset" value="Reset" />

@@ -4,7 +4,6 @@ import logging
 from pastie.lib.base import *
 from pastie.lib.highlight import formatter, langdict
 from sqlalchemy import desc, func
-#from alternativepaginator import Page
 from pastie.lib.paginator import Page
 
 log = logging.getLogger(__name__)
@@ -27,8 +26,12 @@ class PastiesController(BaseController):
         if id:
             c.parent = Session.query(Paste).get(int(id))
             log.debug("Replying to paste with id: %s", id)
+
+        c.authentication_token = h.authentication_token()
         return render('paste.new')
 
+
+    @authenticate_form
     @validate(template='paste.new', schema=model.forms.NewPaste(), form='new')
     def new_POST(self, id=None):
         log.debug('On create')
@@ -39,15 +42,13 @@ class PastiesController(BaseController):
         tags = request.POST['tags']
         parent_id = request.POST['parent_id']
         paste = Paste(author, title, language, code, tags, parent_id=parent_id)
-        #Session.save_or_update(paste)
-        #Session.save(paste)
         Session.commit()
 
         # Clear the pastes listing
         cache.get_cache('pastie.controllers.pasties.list').clear()
         # Clear the tagcloud
         cache.get_cache('pastie.controllers.pastetags.index').clear()
-        # Clear the "pastes with tag" chache
+        # Clear the "pastes with tag" cache
         tagscache = cache.get_cache('pastie.controllers.pastetags.show')
         for tag in paste.tags:
             tagscache.remove_value(tag.name)
@@ -107,6 +108,4 @@ class PastiesController(BaseController):
         c.langdict = langdict
         c.paste = Session.query(Paste).get(int(id))
         c.parent = Session.query(Paste).get(int(parent))
-#        c.diff = c.paste.compare_to(c.other)
-#        c.diff.language = 'diff'
         return render('paste.diff')
