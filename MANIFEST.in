@@ -1,3 +1,9 @@
 recursive-include pastie/public *
 recursive-include pastie/templates *
 exclude pastie/lib/profilepylons.py
+recursive-exclude pastie/tests *
+exclude pastie/public/js/*.min.*
+exclude pastie/public/js/*.COMBINED.*
+exclude pastie/public/css/*.min.*
+exclude pastie/public/css/*.COMBINED.*
+

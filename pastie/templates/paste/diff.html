@@ -12,14 +12,14 @@
   <body>
     <h2 style="font-size: 18px; font-weight:bold;">
       Diferences Between Pastes #${c.paste.id} and #${c.parent.id}
-    </h2>
+    </h2><br/>
 
     <ul>
       <li>Paste #$c.paste.id ${paste_item(c.paste)}</li>
       <li>Paste #$c.parent.id ${paste_item(c.parent)}</li>
-    </ul>
+    </ul><br/>
 
-    <div id="paste" style="width: 100%;">
+    <div class="paste" style="width: 100%;">
     <div id="paste_menu"><ul style="right: 0px;">
       <li style="display:none;"><a class="toggle_linenumbers"
           href="javascript:;">Toggle Line Numbers</a></li>
@@ -30,7 +30,7 @@
     <script type="text/javascript">
       $('li:hidden').show();
       $('a.toggle_linenumbers').bind('click', function() {
-        $('#paste td.linenos').each(function() {
+        $('.paste td.linenos').each(function() {
           var state = $(this).is(':hidden') ? 'show' : 'hide';
           $(this).animate({opacity: state}, 200);
         });

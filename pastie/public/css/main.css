@@ -134,20 +134,20 @@ textarea:focus {
 
 .syntax {margin: 0px;}
 
-#paste {
+.paste {
     margin: 0;
     padding: 0;
     border: 1px solid #333;
 }
 
-#paste table, #paste tbody {
+.paste table, .paste tbody {
     margin: 0;
     padding: 0;
     border-collapse: collapse;
     border-spacing: 0;
 }
 
-#paste td.linenos {
+.paste td.linenos {
     background-color: #333;
     padding-right: 5px;
     padding-left: 20px;
@@ -155,12 +155,12 @@ textarea:focus {
     color: #eee;
 }
 
-#paste td.linenos .special { font-weight: bold; }
-#paste .code, #paste.code {
+.paste td.linenos .special { font-weight: bold; }
+.paste .code, .paste.code {
     padding-left: 10px;
 }
 
-#paste pre {
+.paste pre {
     margin: 0;
     padding: 5px 0 5px 0;
     font-family: 'Bitstream Vera Sans Mono', monospace;

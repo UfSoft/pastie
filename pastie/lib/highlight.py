@@ -4,6 +4,7 @@ from pygments.formatters import HtmlFormatter
 from genshi import XML
 import operator
 import StringIO
+from pylons.decorators.cache import beaker_cache
 
 __all__ = ['code_highlight', 'get_lexers', 'get_lexer_by_name']
 
@@ -95,23 +96,31 @@ formatter = PastieHtmlFormatter(linenos=True, cssclass="syntax",
                                 encoding='utf-8', lineanchors='line',
                                 lineanchorlinks=True, linenospecial=10)
 
+
 def code_highlight(code, truncate_lines=None, diff_to=None):
-    source = code.code
     if diff_to:
-        source = code.compare_to(diff_to)
-        print source
-    if truncate_lines:
-        split_source = source.split('\n')
-        if len(split_source) > truncate_lines:
-            source = split_source[:truncate_lines-1]
-            source.append('...')
-            source = ''.join(source)
+        diff_to_id = diff_to.id
+    else:
+        diff_to_id = None
+    @beaker_cache(type='memory', expire='never')
+    def cached_wrapper(paste_id=None, truncate_lines=None, diff_to_id=None):
+        source = code.code
+        if diff_to:
+            source = code.compare_to(diff_to)
+        if truncate_lines:
+            split_source = source.split('\n')
+            if len(split_source) > truncate_lines:
+                source = split_source[:truncate_lines-1]
+                source.append('...')
+                source = ''.join(source)
 
-    lexer = get_lexer_by_name(code.language or 'text', stripall=True)
-    if diff_to:
-        lexex = get_lexer_by_name('diff')
-    return XML(highlight(source, lexer, formatter).decode('utf-8'))
+        lexer = get_lexer_by_name(code.language or 'text', stripall=True)
+        if diff_to:
+            lexex = get_lexer_by_name('diff')
+        return XML(highlight(source, lexer, formatter).decode('utf-8'))
+    return cached_wrapper(code.id, truncate_lines, diff_to_id)
 
+@beaker_cache(type='memory', expire=7200)
 def get_lexers(sorted_list=False):
     lexers = {}
     for name, aliases, _, _ in get_all_lexers():

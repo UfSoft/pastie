@@ -26,7 +26,7 @@
     </div><br/>
 
 
-    <div id="paste">
+    <div id="paste" class="paste">
     <div id="paste_menu"><ul>
       <li>
         <a href="${h.url_for('replypaste', id=c.paste.id)}">Reply To Paste</a>
@@ -50,7 +50,7 @@
     <script type="text/javascript">
       $('li:hidden').show();
       $('a.toggle_linenumbers').bind('click', function() {
-        $('#paste td.linenos').each(function() {
+        $('.paste td.linenos').each(function() {
           var state = $(this).is(':hidden') ? 'show' : 'hide';
           $(this).animate({opacity: state}, 200);
         });

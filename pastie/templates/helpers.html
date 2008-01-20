@@ -16,7 +16,9 @@
       ${ h.tag.a(tag.name, href=h.url_for('pastetag', id=tag.name)) }&nbsp;
     </py:for></span>
     </div>
-    ${h.code_highlight(paste)}
+    <div class="paste">
+      ${h.code_highlight(paste)}
+    </div>
     </div>
   </py:def>
 
