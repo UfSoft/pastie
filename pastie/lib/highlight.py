@@ -103,7 +103,7 @@ def code_highlight(code, truncate_lines=None, diff_to=None):
     else:
         diff_to_id = None
 
-    @beaker_cache(type='memory', expire='never')
+    @beaker_cache(type='dbm', expire='never')
     def cached_wrapper(paste_id=None, truncate_lines=None, diff_to_id=None):
         source = code.code
         if diff_to:
@@ -120,8 +120,8 @@ def code_highlight(code, truncate_lines=None, diff_to=None):
             lexex = get_lexer_by_name('diff')
 
         formatter.lineanchors='paste-%d-line' % paste_id
-        return XML(highlight(source, lexer, formatter).decode('utf-8'))
-    return cached_wrapper(code.id, truncate_lines, diff_to_id)
+        return highlight(source, lexer, formatter).decode('utf-8')
+    return XML(cached_wrapper(code.id, truncate_lines, diff_to_id))
 
 @beaker_cache(type='memory', expire=7200)
 def get_lexers(sorted_list=False):
