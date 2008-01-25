@@ -6,7 +6,7 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       py:strip="">
 
-  <head py:match="head">
+  <head py:match="head" once="true">
     <title py:with="title = unicode(select('title/text()'))">
       ${ '  -  '.join(filter(None, [u"%s Pastie" % c.app_name , title])) }
     </title>
@@ -40,7 +40,7 @@
 
   </head>
 
-  <body py:match="body">
+  <body py:match="body" once="true">
     <noscript>
       <div id="warning">
         <div>
@@ -109,6 +109,6 @@
   </body>
 </html>
 <!--!
-$Id: layout.html 91 2008-01-06 17:22:11Z s0undt3ch $
+$Id: layout.html 119 2008-01-25 01:38:01Z s0undt3ch $
 vim: sw=2 ts=2 fenc=utf-8 ft=kid et
 -->
