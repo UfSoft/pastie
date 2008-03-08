@@ -17,7 +17,8 @@ paste_table = Table('pastes', metadata,
     Column('title', types.Unicode(60)),
     Column('date', types.DateTime, nullable=False),
     Column('language', types.String(30), nullable=False),
-    Column('code', types.Unicode, nullable=False),
+    Column('code', types.Text(convert_unicode=True, assert_unicode='warn'),
+           nullable=False),
     Column('parent_id', types.Integer, ForeignKey('pastes.id'), nullable=True,
            default=None)
 )

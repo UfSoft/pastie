@@ -14,14 +14,8 @@ class PastiesController(BaseController):
     def new(self, id=None):
         log.debug('On new')
         c.tags = [str(tag.name) for tag in Session.query(Tag).all()]
-        if 'author' in request.cookies:
-            c.author = request.cookies['author']
-        else:
-            c.author = ''
-        if 'language' in request.cookies:
-            c.language = request.cookies['language']
-        else:
-            c.language = ''
+        c.author = request.cookies.get('author', '')
+        c.language = request.cookies.get('language', '')
         c.public_key = config['spamfilter.recaptcha.public_key']
         if id:
             c.parent = Session.query(Paste).get(int(id))
@@ -35,18 +29,23 @@ class PastiesController(BaseController):
     @validate(template='paste.new', schema=model.forms.NewPaste(), form='new')
     def new_POST(self, id=None):
         log.debug('On create')
-        author = request.POST['author']
-        title = request.POST['title']
-        language = request.POST['language']
-        code = request.POST['code']
-        tags = request.POST['tags']
-        parent_id = request.POST['parent_id']
+        author = request.POST.get('author')
+        title = request.POST.get('title')
+        language = request.POST.get('language')
+        code = request.POST.get('code')
+        tags = request.POST.get('tags')
+        parent_id = request.POST.get('parent_id', None)
+        if parent_id is u'':
+           parent_id = None
+        log.debug('Parent ID: %r', parent_id)
         paste = Paste(author, title, language, code, tags, parent_id=parent_id)
         Session.commit()
 
         # Clear the pastes listing
+        log.debug('Clearing pasties list cache')
         cache.get_cache('pastie.controllers.pasties.list').clear()
         # Clear the tagcloud
+        log.debug('Clear the tagcloud')
         cache.get_cache('pastie.controllers.pastetags.index').clear()
         # Clear the "pastes with tag" cache
         tagscache = cache.get_cache('pastie.controllers.pastetags.show')
@@ -61,7 +60,7 @@ class PastiesController(BaseController):
     def index(self, id=1):
         redirect_to(action='list', id=id)
 
-    # One how cache
+    # One hour cache
     @beaker_cache(key='id', expire=3600, type="memory")
     def list(self, id):
         c.paginator = Page(Session.query(Paste), current_page=id or 1,
